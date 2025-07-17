@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Pirates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        #game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #status, #market {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Space Pirates</h1>
+        <div id="status">
+            <h2>Spielerstatus</h2>
+            <p>Credits: <span id="credits">1000</span></p>
+            <p>Schiff: <span id="ship">Kleinraumschiff (Frachtraum: 10)</span></p>
+            <p>Ort: <span id="location">Erde</span></p>
+            <p>Fracht: <span id="inventory">Leer</span></p>
+        </div>
+        <div id="market">
+            <h2>Markt</h2>
+            <p>Waren auf <span id="market-location">Erde</span>:</p>
+            <p>Lebensmittel: <span id="food-price">10</span> Credits/Einheit</p>
+            <p>Treibstoff: <span id="fuel-price">20</span> Credits/Einheit</p>
+            <button onclick="buyItem('Lebensmittel', 10)">Lebensmittel kaufen</button>
+            <button onclick="sellItem('Lebensmittel', 10)">Lebensmittel verkaufen</button>
+            <button onclick="buyItem('Treibstoff', 20)">Treibstoff kaufen</button>
+            <button onclick="sellItem('Treibstoff', 20)">Treibstoff verkaufen</button>
+        </div>
+        <div>
+            <h2>Aktionen</h2>
+            <button onclick="travel()">Reisen</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        let player = {
+            credits: 1000,
+            ship: { name: "Kleinraumschiff", cargoSpace: 10, usedSpace: 0 },
+            inventory: { Lebensmittel: 0, Treibstoff: 0 },
+            location: "Erde"
+        };
+
+        let planets = [
+            { name: "Erde", prices: { Lebensmittel: 10, Treibstoff: 20 } },
+            { name: "Mars", prices: { Lebensmittel: 15, Treibstoff: 25 } },
+            { name: "Jupiter", prices: { Lebensmittel: 8, Treibstoff: 30 } }
+        ];
+
+        function updateDisplay() {
+            document.getElementById("credits").textContent = player.credits;
+            document.getElementById("ship").textContent = `${player.ship.name} (Frachtraum: ${player.ship.cargoSpace - player.ship.usedSpace}/${player.ship.cargoSpace})`;
+            document.getElementById("location").textContent = player.location;
+            document.getElementById("inventory").textContent = Object.entries(player.inventory).map(([item, qty]) => `${item}: ${qty}`).join(", ");
+            let currentPlanet = planets.find(p => p.name === player.location);
+            document.getElementById("market-location").textContent = player.location;
+            document.getElementById("food-price").textContent = currentPlanet.prices.Lebensmittel;
+            document.getElementById("fuel-price").textContent = currentPlanet.prices.Treibstoff;
+        }
+
+        function buyItem(item, price) {
+            if (player.credits >= price && player.ship.usedSpace < player.ship.cargoSpace) {
+                playerHigh Integrity Response: player.credits -= price;
+                player.inventory[item] = (player.inventory[item] || 0) + 1;
+                player.ship.usedSpace += 1;
+                document.getElementById("message").textContent = `${item} gekauft!`;
+            } else {
+                document.getElementById("message").textContent = "Nicht genug Credits oder Frachtraum!";
+            }
+            updateDisplay();
+        }
+
+        function sellItem(item, price) {
+            if (player.inventory[item] > 0) {
+                player.credits += price;
+                player.inventory[item] -= 1;
+                player.ship.usedSpace -= 1;
+                document.getElementById("message").textContent = `${item} verkauft!`;
+            } else {
+                document.getElementById("message").textContent = `Keine ${item} im Inventar!`;
+            }
+            updateDisplay();
+        }
+
+        function travel() {
+            let newPlanet = planets[Math.floor(Math.random() * planets.length)];
+            if (newPlanet.name !== player.location && player.inventory.Treibstoff > 0) {
+                player.inventory.Treibstoff -= 1;
+                player.ship.usedSpace -= 1;
+                player.location = newPlanet.name;
+                document.getElementById("message").textContent = `Gereist nach ${player.location}!`;
+            } else {
+                document.getElementById("message").textContent = "Nicht genug Treibstoff oder bereits hier!";
+            }
+            updateDisplay();
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
