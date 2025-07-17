@@ -44,6 +44,7 @@
             <p>Schiff: <span id="ship">Kleinraumschiff (Frachtraum: 10)</span></p>
             <p>Ort: <span id="location">Erde</span></p>
             <p>Fracht: <span id="inventory">Leer</span></p>
+            <p>Spieltag: <span id="day">1</span></p>
         </div>
         <div id="market">
             <h2>Markt</h2>
@@ -67,7 +68,8 @@
             credits: 1000,
             ship: { name: "Kleinraumschiff", cargoSpace: 10, usedSpace: 0 },
             inventory: { Lebensmittel: 0, Treibstoff: 0 },
-            location: "Erde"
+            location: "Erde",
+            day: 1
         };
 
         let planets = [
@@ -80,16 +82,19 @@
             document.getElementById("credits").textContent = player.credits;
             document.getElementById("ship").textContent = `${player.ship.name} (Frachtraum: ${player.ship.cargoSpace - player.ship.usedSpace}/${player.ship.cargoSpace})`;
             document.getElementById("location").textContent = player.location;
-            document.getElementById("inventory").textContent = Object.entries(player.inventory).map(([item, qty]) => `${item}: ${qty}`).join(", ");
+            document.getElementById("inventory").textContent = Object.entries(player.inventory).map(([item, qty]) => `${item}: ${qty}`).join(", ") || "Leer";
+            document.getElementById("day").textContent = player.day;
             let currentPlanet = planets.find(p => p.name === player.location);
             document.getElementById("market-location").textContent = player.location;
             document.getElementById("food-price").textContent = currentPlanet.prices.Lebensmittel;
             document.getElementById("fuel-price").textContent = currentPlanet.prices.Treibstoff;
+            console.log("Display updated:", player);
         }
 
         function buyItem(item, price) {
+            console.log(`Versuche ${item} für ${price} Credits zu kaufen`);
             if (player.credits >= price && player.ship.usedSpace < player.ship.cargoSpace) {
-                playerHigh Integrity Response: player.credits -= price;
+                player.credits -= price;
                 player.inventory[item] = (player.inventory[item] || 0) + 1;
                 player.ship.usedSpace += 1;
                 document.getElementById("message").textContent = `${item} gekauft!`;
@@ -100,6 +105,7 @@
         }
 
         function sellItem(item, price) {
+            console.log(`Versuche ${item} für ${price} Credits zu verkaufen`);
             if (player.inventory[item] > 0) {
                 player.credits += price;
                 player.inventory[item] -= 1;
@@ -112,12 +118,14 @@
         }
 
         function travel() {
+            console.log("Versuche zu reisen");
             let newPlanet = planets[Math.floor(Math.random() * planets.length)];
             if (newPlanet.name !== player.location && player.inventory.Treibstoff > 0) {
                 player.inventory.Treibstoff -= 1;
                 player.ship.usedSpace -= 1;
                 player.location = newPlanet.name;
-                document.getElementById("message").textContent = `Gereist nach ${player.location}!`;
+                player.day += 1;
+                document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
             } else {
                 document.getElementById("message").textContent = "Nicht genug Treibstoff oder bereits hier!";
             }
