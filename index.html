@@ -9,53 +9,94 @@
             font-family: Arial, sans-serif;
             background-color: #1a1a1a;
             color: #ffffff;
-            text-align: center;
-            padding: 20px;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         #game-container {
             max-width: 600px;
             margin: 0 auto;
             background-color: #333;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        #title {
+            width: 100%;
+            background-color: #222;
+            padding: 10px 0;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        #title h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        #status, #market, #travel-options {
+            margin: 10px 0;
+        }
+        #status p {
+            margin: 5px 0;
+        }
+        #market, #travel-options {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #actions {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
         }
         button {
-            padding: 10px 20px;
+            padding: 10px 15px;
             margin: 5px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
-            touch-action: manipulation; /* Verhindert Doppeltipp-Zoomen */
+            touch-action: manipulation;
+            font-size: 14px;
         }
         button:hover {
             background-color: #45a049;
         }
-        #status, #market, #travel-options {
-            margin: 20px 0;
-        }
         #travel-options {
-            display: none; /* Versteckt Planetenwahl initial */
+            display: none;
+        }
+        #image-placeholder {
+            display: none; /* Für zukünftige Bilder */
         }
         #build-version {
             font-size: 12px;
             color: #888;
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: right;
         }
     </style>
 </head>
 <body>
     <div id="game-container">
-        <h1>Space Pirates</h1>
+        <div id="title">
+            <h1>Space Pirates</h1>
+        </div>
         <div id="status">
             <h2>Spielerstatus</h2>
-            <p>Credits: <span id="credits">1000</span></p>
-            <p>Schiff: <span id="ship">Kleinraumschiff (Frachtraum: 10)</span></p>
+            <p>Schiff: <span id="ship-condition">100%</span></p>
+            <p>Schiffsklasse: <span id="ship">Kleinraumschiff (Frachtraum: 10)</span></p>
             <p>Ort: <span id="location">Erde</span></p>
             <p>Fracht: <span id="inventory">Leer</span></p>
             <p>Spieltag: <span id="day">1</span></p>
+            <p>Credits: <span id="credits">1000</span></p>
         </div>
+        <div id="image-placeholder"></div>
         <div id="market">
             <h2>Markt</h2>
             <p>Waren auf <span id="market-location">Erde</span>:</p>
@@ -76,13 +117,13 @@
             <button onclick="cancelTravel()">Abbrechen</button>
         </div>
         <div id="message"></div>
-        <div id="build-version">Build 0.1.1</div>
+        <div id="build-version">Build 0.1.2</div>
     </div>
 
     <script>
         let player = {
             credits: 1000,
-            ship: { name: "Kleinraumschiff", cargoSpace: 10, usedSpace: 0 },
+            ship: { name: "Kleinraumschiff", cargoSpace: 10, usedSpace: 0, condition: 100 },
             inventory: { Lebensmittel: 0, Treibstoff: 0 },
             location: "Erde",
             day: 1
@@ -97,8 +138,14 @@
         function updateDisplay() {
             document.getElementById("credits").textContent = player.credits;
             document.getElementById("ship").textContent = `${player.ship.name} (Frachtraum: ${player.ship.cargoSpace - player.ship.usedSpace}/${player.ship.cargoSpace})`;
+            document.getElementById("ship-condition").textContent = `${player.ship.condition}%`;
             document.getElementById("location").textContent = player.location;
-            document.getElementById("inventory").textContent = Object.entries(player.inventory).map(([item, qty]) => `${item}: ${qty}`).join(", ") || "Leer";
+            // Nur Ressourcen mit Menge > 0 anzeigen
+            const inventoryItems = Object.entries(player.inventory)
+                .filter(([_, qty]) => qty > 0)
+                .map(([item, qty]) => `${item}: ${qty}`)
+                .join(", ");
+            document.getElementById("inventory").textContent = inventoryItems || "Leer";
             document.getElementById("day").textContent = player.day;
             let currentPlanet = planets.find(p => p.name === player.location);
             document.getElementById("market-location").textContent = player.location;
@@ -135,14 +182,11 @@
 
         function showTravelOptions() {
             console.log("Zeige Planetenwahl");
-            // Verstecke Markt und Aktionen
             document.getElementById("market").style.display = "none";
             document.getElementById("actions").style.display = "none";
-            // Zeige Planetenwahl
             document.getElementById("travel-options").style.display = "block";
-            // Erstelle Buttons für alle Planeten außer dem aktuellen
             let planetButtons = document.getElementById("planet-buttons");
-            planetButtons.innerHTML = ""; // Lösche vorherige Buttons
+            planetButtons.innerHTML = "";
             planets.forEach(planet => {
                 if (planet.name !== player.location) {
                     let button = document.createElement("button");
@@ -162,7 +206,6 @@
                 player.location = planetName;
                 player.day += 1;
                 document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
-                // Zeige Markt und Aktionen wieder an, verstecke Planetenwahl
                 document.getElementById("market").style.display = "block";
                 document.getElementById("actions").style.display = "block";
                 document.getElementById("travel-options").style.display = "none";
@@ -174,7 +217,6 @@
 
         function cancelTravel() {
             console.log("Reise abgebrochen");
-            // Zeige Markt und Aktionen wieder an, verstecke Planetenwahl
             document.getElementById("market").style.display = "block";
             document.getElementById("actions").style.display = "block";
             document.getElementById("travel-options").style.display = "none";
