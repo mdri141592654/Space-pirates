@@ -19,29 +19,8 @@
             position: absolute;
             top: 48px;
             left: 70px;
-            width: 1040px; /* 1030px + 10px für Rahmen */
-            height: 185px; /* 175px + 10px für Rahmen */
-            border: 5px solid #005955; /* Äußerer Rahmen */
-            box-shadow: inset 0 0 0 5px #000000; /* Innerer schwarzer Rahmen */
-            box-sizing: border-box;
-            clip-path: polygon(
-                30px 0,
-                calc(100% - 30px) 0,
-                100% 30px,
-                100% calc(100% - 30px),
-                calc(100% - 30px) 100%,
-                30px 100%,
-                0 calc(100% - 30px),
-                0 30px
-            );
-        }
-
-        .header-field-inner {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 1030px; /* Ursprüngliche Größe */
-            height: 175px; /* Ursprüngliche Größe */
+            width: 1030px;
+            height: 175px;
             background-color: #003f2c;
             clip-path: polygon(
                 30px 0,
@@ -75,29 +54,8 @@
             position: absolute;
             top: 232px;
             left: 70px;
-            width: 1040px; /* 1030px + 10px für Rahmen */
-            height: 210px; /* 200px + 10px für Rahmen */
-            border: 5px solid #005955; /* Äußerer Rahmen */
-            box-shadow: inset 0 0 0 5px #000000; /* Innerer schwarzer Rahmen */
-            box-sizing: border-box;
-            clip-path: polygon(
-                30px 0,
-                calc(100% - 30px) 0,
-                100% 30px,
-                100% calc(100% - 30px),
-                calc(100% - 30px) 100%,
-                30px 100%,
-                0 calc(100% - 30px),
-                0 30px
-            );
-        }
-
-        .inventory-field-inner {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 1030px; /* Ursprüngliche Größe */
-            height: 200px; /* Ursprüngliche Größe */
+            width: 1030px;
+            height: 200px;
             background-color: #001f2f;
             clip-path: polygon(
                 30px 0,
@@ -114,13 +72,9 @@
 </head>
 <body>
     <div class="header-field">
-        <div class="header-field-inner">
-            <div class="header-text">Space Pirates</div>
-        </div>
+        <div class="header-text">Space Pirates</div>
     </div>
-    <div class="inventory-field">
-        <div class="inventory-field-inner"></div>
-    </div>
+    <div class="inventory-field"></div>
 
     <script>
         console.log("Space Pirates initialized");
