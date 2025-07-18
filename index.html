@@ -47,11 +47,11 @@
             margin: 5px 0;
         }
         #market, #travel-options {
-            flex: 1;
+            height: 300px; /* Fixierte Höhe für alle Szenen */
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            margin: 0; /* Kein Margin, um gleiche Höhe zu gewährleisten */
+            justify-content: flex-start; /* Inhalt oben ausrichten */
+            margin: 0;
         }
         #market-buttons, #planet-buttons {
             display: flex;
@@ -133,7 +133,7 @@
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.6</div>
+        <div id="build-version">Build 0.1.2.7</div>
     </div>
 
     <script>
