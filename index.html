@@ -25,6 +25,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            clip-path: polygon(
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px),
+                0 30px
+            );
         }
 
         .header-text {
@@ -47,7 +57,6 @@
     </div>
 
     <script>
-        // Hier kannst du JavaScript für zukünftige Interaktivität hinzufügen
         console.log("Space Pirates initialized");
     </script>
 </body>
