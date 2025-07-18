@@ -53,9 +53,9 @@
             justify-content: center;
             margin: 10px 0;
         }
-        #market-buttons {
+        #market-buttons, #planet-buttons {
             display: flex;
-            flex-direction: column; /* Vertikale Anordnung */
+            flex-direction: column;
         }
         button {
             padding: 10px 20px;
@@ -67,8 +67,13 @@
             touch-action: manipulation;
             font-size: 14px;
             width: 100%; /* Gleiche Breite wie Space Pirates */
-            box-sizing: border-box; /* Padding in Breite einbeziehen */
-            text-align: center; /* Zentrierter Text */
+            box-sizing: border-box;
+            text-align: center;
+            height: 40px; /* Fixierte Höhe */
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Vertikal und horizontal zentriert */
+            line-height: 20px;
         }
         button:last-child {
             margin-bottom: 0; /* Kein Abstand am letzten Button */
@@ -127,7 +132,7 @@
             <div id="planet-buttons"></div>
             <button onclick="cancelTravel()">Abbrechen</button>
         </div>
-        <div id="build-version">Build 0.1.2.4</div>
+        <div id="build-version">Build 0.1.2.5</div>
     </div>
 
     <script>
