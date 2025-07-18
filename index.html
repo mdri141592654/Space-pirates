@@ -21,10 +21,26 @@
             left: 70px;
             width: 1030px;
             height: 175px;
-            background-color: #003f2c;
             border: 5px solid #005955; /* Äußerer Rahmen */
             box-shadow: inset 0 0 0 5px #000000; /* Innerer schwarzer Rahmen */
             box-sizing: border-box;
+            clip-path: polygon(
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px),
+                0 30px
+            );
+        }
+
+        .header-field-inner {
+            width: calc(100% - 10px); /* Abzug der Rahmenbreite (5px + 5px) */
+            height: calc(100% - 10px); /* Abzug der Rahmenbreite (5px + 5px) */
+            margin: 5px; /* Versatz für die Rahmen */
+            background-color: #003f2c;
             clip-path: polygon(
                 30px 0,
                 calc(100% - 30px) 0,
@@ -59,10 +75,26 @@
             left: 70px;
             width: 1030px;
             height: 200px;
-            background-color: #001f2f;
             border: 5px solid #005955; /* Äußerer Rahmen */
             box-shadow: inset 0 0 0 5px #000000; /* Innerer schwarzer Rahmen */
             box-sizing: border-box;
+            clip-path: polygon(
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px),
+                0 30px
+            );
+        }
+
+        .inventory-field-inner {
+            width: calc(100% - 10px); /* Abzug der Rahmenbreite (5px + 5px) */
+            height: calc(100% - 10px); /* Abzug der Rahmenbreite (5px + 5px) */
+            margin: 5px; /* Versatz für die Rahmen */
+            background-color: #001f2f;
             clip-path: polygon(
                 30px 0,
                 calc(100% - 30px) 0,
@@ -78,9 +110,13 @@
 </head>
 <body>
     <div class="header-field">
-        <div class="header-text">Space Pirates</div>
+        <div class="header-field-inner">
+            <div class="header-text">Space Pirates</div>
+        </div>
     </div>
-    <div class="inventory-field"></div>
+    <div class="inventory-field">
+        <div class="inventory-field-inner"></div>
+    </div>
 
     <script>
         console.log("Space Pirates initialized");
