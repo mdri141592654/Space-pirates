@@ -27,6 +27,7 @@
             flex-direction: column;
             flex: 1 0 auto; /* Flexible Höhe ohne Überlauf */
             min-height: 0; /* Verhindert Überlauf durch Flex */
+            position: relative; /* Referenz für absolut positionierte Buttons */
         }
         #title {
             width: 100%;
@@ -53,7 +54,6 @@
         }
         #market, #travel-options {
             height: 350px; /* Feste Höhe für Konsistenz */
-            position: relative; /* Referenz für absolute Positionierung der Buttons */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -81,10 +81,10 @@
             line-height: 1.2;
         }
         #market-buttons, #planet-buttons {
-            position: absolute; /* Absolut positioniert relativ zu #market oder #travel-options */
-            top: 100px; /* Fester Abstand vom oberen Rand */
-            left: 0;
-            right: 0;
+            position: absolute; /* Absolut positioniert relativ zu #game-container */
+            top: 220px; /* Fester Abstand vom oberen Rand des #game-container */
+            left: 10px; /* Anpassung an das Padding von #game-container */
+            right: 10px; /* Anpassung an das Padding von #game-container */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -249,7 +249,7 @@
             document.getElementById("message").textContent = "Wähle einen Planeten zum Reisen.";
             
             // Stabilisiere Layout
-            planetButtons.style.top = "100px";
+            planetButtons.style.top = "220px";
             planetButtons.style.transition = "none";
             planetButtons.offsetHeight; // Trigger reflow
         }
@@ -259,4 +259,42 @@
             if (player.inventory.Treibstoff > 0) {
                 player.inventory.Treibstoff -= 1;
                 player.ship.usedSpace -= 1;
-                player.location = planet
+                player.location = planetName;
+                player.day += 1;
+                document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
+                document.getElementById("market").style.display = "block";
+                document.getElementById("travel-options").style.display = "none";
+            } else {
+                document.getElementById("message").textContent = "Nicht genug Treibstoff!";
+            }
+            updateDisplay();
+        }
+
+        function cancelTravel() {
+            console.log("Reise abgebrochen");
+            document.getElementById("market").style.display = "block";
+            document.getElementById("travel-options").style.display = "none";
+            document.getElementById("message").textContent = "Reise abgebrochen.";
+            
+            // Stabilisiere das Aktions-Menü-Layout
+            const marketButtons = document.getElementById("market-buttons");
+            marketButtons.style.top = "220px";
+            marketButtons.style.transition = "none";
+            marketButtons.offsetHeight; // Trigger reflow
+            updateDisplay();
+        }
+
+        // Verhindere Doppeltipp-Zoomen
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = new Date().getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        updateDisplay();
+    </script>
+</body>
+</html>
