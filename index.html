@@ -51,7 +51,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            margin: 10px 0;
+            margin: 0; /* Kein Margin, um gleiche Höhe zu gewährleisten */
         }
         #market-buttons, #planet-buttons {
             display: flex;
@@ -129,10 +129,11 @@
         </div>
         <div id="travel-options">
             <h2>Wähle einen Planeten</h2>
-            <div id="planet-buttons"></div>
-            <button onclick="cancelTravel()">Abbrechen</button>
+            <div id="planet-buttons">
+                <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
+            </div>
         </div>
-        <div id="build-version">Build 0.1.2.5</div>
+        <div id="build-version">Build 0.1.2.6</div>
     </div>
 
     <script>
@@ -209,6 +210,10 @@
                     planetButtons.appendChild(button);
                 }
             });
+            let cancelButton = document.createElement("button");
+            cancelButton.textContent = "Abbrechen";
+            cancelButton.onclick = cancelTravel;
+            planetButtons.appendChild(cancelButton);
             document.getElementById("message").textContent = "Wähle einen Planeten zum Reisen.";
         }
 
