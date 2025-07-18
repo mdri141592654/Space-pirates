@@ -24,6 +24,7 @@
             display: flex;
             flex-direction: column;
             flex: 1;
+            touch-action: manipulation; /* Verhindert Zoomen auf Container */
         }
         #title {
             width: 100%;
@@ -60,17 +61,14 @@
             gap: 5px;
         }
         button {
-            padding: 10px 0;
+            padding: 10px 20px; /* Ursprüngliche Breite */
             margin: 5px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
-            touch-action: manipulation;
+            touch-action: manipulation; /* Verhindert Zoomen auf Buttons */
             font-size: 14px;
-            flex: 1; /* Gleich große Buttons */
-            min-width: 100px;
-            max-width: 120px; /* Begrenze Breite für Konsistenz */
         }
         button:hover {
             background-color: #45a049;
@@ -126,7 +124,7 @@
             <div id="planet-buttons"></div>
             <button onclick="cancelTravel()">Abbrechen</button>
         </div>
-        <div id="build-version">Build 0.1.2.1</div>
+        <div id="build-version">Build 0.1.2.2</div>
     </div>
 
     <script>
@@ -232,6 +230,16 @@
             document.getElementById("message").textContent = "Reise abgebrochen.";
             updateDisplay();
         }
+
+        // Verhindere Doppeltipp-Zoomen
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = new Date().getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
 
         updateDisplay();
     </script>
