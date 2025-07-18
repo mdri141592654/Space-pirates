@@ -10,21 +10,21 @@
             background-color: #1a1a1a;
             color: #ffffff;
             margin: 0;
-            padding: 10px;
+            padding: 5px; /* Reduzierter Seitenrand */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
         #game-container {
-            max-width: 600px;
+            width: 100%; /* Volle Breite nutzen */
             margin: 0 auto;
             background-color: #333;
-            padding: 15px;
+            padding: 10px; /* Innenabstand */
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             flex: 1;
-            touch-action: manipulation; /* Verhindert Zoomen auf Container */
+            touch-action: manipulation;
         }
         #title {
             width: 100%;
@@ -53,21 +53,20 @@
             justify-content: center;
             margin: 10px 0;
         }
-        #actions {
-            margin-top: auto;
+        #market-buttons {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 5px;
         }
         button {
-            padding: 10px 20px; /* Ursprüngliche Breite */
+            padding: 10px 20px;
             margin: 5px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
-            touch-action: manipulation; /* Verhindert Zoomen auf Buttons */
+            touch-action: manipulation;
             font-size: 14px;
         }
         button:hover {
@@ -111,20 +110,20 @@
             <p>Waren auf <span id="market-location">Erde</span>:</p>
             <p>Lebensmittel: <span id="food-price">10</span> Credits/Einheit</p>
             <p>Treibstoff: <span id="fuel-price">20</span> Credits/Einheit</p>
-            <button onclick="buyItem('Lebensmittel', 10)">Lebensmittel kaufen</button>
-            <button onclick="sellItem('Lebensmittel', 10)">Lebensmittel verkaufen</button>
-            <button onclick="buyItem('Treibstoff', 20)">Treibstoff kaufen</button>
-            <button onclick="sellItem('Treibstoff', 20)">Treibstoff verkaufen</button>
-        </div>
-        <div id="actions">
-            <button onclick="showTravelOptions()">Reisen</button>
+            <div id="market-buttons">
+                <button onclick="buyItem('Lebensmittel', 10)">Lebensmittel kaufen</button>
+                <button onclick="sellItem('Lebensmittel', 10)">Lebensmittel verkaufen</button>
+                <button onclick="buyItem('Treibstoff', 20)">Treibstoff kaufen</button>
+                <button onclick="sellItem('Treibstoff', 20)">Treibstoff verkaufen</button>
+                <button onclick="showTravelOptions()">Reisen</button>
+            </div>
         </div>
         <div id="travel-options">
             <h2>Wähle einen Planeten</h2>
             <div id="planet-buttons"></div>
             <button onclick="cancelTravel()">Abbrechen</button>
         </div>
-        <div id="build-version">Build 0.1.2.2</div>
+        <div id="build-version">Build 0.1.2.3</div>
     </div>
 
     <script>
@@ -190,7 +189,6 @@
         function showTravelOptions() {
             console.log("Zeige Planetenwahl");
             document.getElementById("market").style.display = "none";
-            document.getElementById("actions").style.display = "none";
             document.getElementById("travel-options").style.display = "block";
             let planetButtons = document.getElementById("planet-buttons");
             planetButtons.innerHTML = "";
@@ -214,7 +212,6 @@
                 player.day += 1;
                 document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
                 document.getElementById("market").style.display = "block";
-                document.getElementById("actions").style.display = "block";
                 document.getElementById("travel-options").style.display = "none";
             } else {
                 document.getElementById("message").textContent = "Nicht genug Treibstoff!";
@@ -225,7 +222,6 @@
         function cancelTravel() {
             console.log("Reise abgebrochen");
             document.getElementById("market").style.display = "block";
-            document.getElementById("actions").style.display = "block";
             document.getElementById("travel-options").style.display = "none";
             document.getElementById("message").textContent = "Reise abgebrochen.";
             updateDisplay();
