@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -10,9 +10,9 @@
             margin: 0;
             padding: 0;
             background-color: #000000;
-            width: 1170px;
-            height: 1985px;
-            overflow: hidden;
+            min-width: 1170px; /* Mindestbreite statt fester Breite */
+            min-height: 1985px; /* Mindesthöhe statt fester Höhe */
+            overflow: auto; /* Scrollen erlauben, falls nötig */
         }
 
         .header-field {
