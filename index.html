@@ -10,16 +10,16 @@
             background-color: #1a1a1a;
             color: #ffffff;
             margin: 0;
-            padding: 5px; /* Reduzierter Seitenrand */
+            padding: 5px;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
         #game-container {
-            width: 100%; /* Volle Breite nutzen */
+            width: 100%;
             margin: 0 auto;
             background-color: #333;
-            padding: 10px; /* Innenabstand */
+            padding: 10px;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
@@ -55,19 +55,23 @@
         }
         #market-buttons {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
+            flex-direction: column; /* Vertikale Anordnung */
         }
         button {
             padding: 10px 20px;
-            margin: 5px;
+            margin-bottom: 5px; /* Gleichmäßiger Abstand */
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
             touch-action: manipulation;
             font-size: 14px;
+            width: 100%; /* Gleiche Breite wie Space Pirates */
+            box-sizing: border-box; /* Padding in Breite einbeziehen */
+            text-align: center; /* Zentrierter Text */
+        }
+        button:last-child {
+            margin-bottom: 0; /* Kein Abstand am letzten Button */
         }
         button:hover {
             background-color: #45a049;
@@ -123,7 +127,7 @@
             <div id="planet-buttons"></div>
             <button onclick="cancelTravel()">Abbrechen</button>
         </div>
-        <div id="build-version">Build 0.1.2.3</div>
+        <div id="build-version">Build 0.1.2.4</div>
     </div>
 
     <script>
