@@ -21,15 +21,10 @@
             left: 70px;
             width: 1030px;
             height: 175px;
+            background-color: #003f2c;
             border: 5px solid #005955; /* Äußerer Rahmen */
             box-shadow: inset 0 0 0 5px #000000; /* Innerer schwarzer Rahmen */
             box-sizing: border-box;
-        }
-
-        .header-field-inner {
-            width: 100%;
-            height: 100%;
-            background-color: #003f2c;
             clip-path: polygon(
                 30px 0,
                 calc(100% - 30px) 0,
@@ -58,21 +53,16 @@
             text-stroke: 3px #000f21;
         }
 
-        .content-field {
+        .inventory-field {
             position: absolute;
             top: 232px;
             left: 70px;
             width: 1030px;
             height: 200px;
+            background-color: #001f2f;
             border: 5px solid #005955; /* Äußerer Rahmen */
             box-shadow: inset 0 0 0 5px #000000; /* Innerer schwarzer Rahmen */
             box-sizing: border-box;
-        }
-
-        .content-field-inner {
-            width: 100%;
-            height: 100%;
-            background-color: #001f2f;
             clip-path: polygon(
                 30px 0,
                 calc(100% - 30px) 0,
@@ -88,13 +78,9 @@
 </head>
 <body>
     <div class="header-field">
-        <div class="header-field-inner">
-            <div class="header-text">Space Pirates</div>
-        </div>
+        <div class="header-text">Space Pirates</div>
     </div>
-    <div class="content-field">
-        <div class="content-field-inner"></div>
-    </div>
+    <div class="inventory-field"></div>
 
     <script>
         console.log("Space Pirates initialized");
