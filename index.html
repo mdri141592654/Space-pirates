@@ -27,6 +27,7 @@
             flex-direction: column;
             flex: 1 0 auto; /* Flexible Höhe ohne Überlauf */
             min-height: 0; /* Verhindert Überlauf durch Flex */
+            position: relative; /* Referenz für absolute Positionierung */
         }
         #title {
             width: 100%;
@@ -52,13 +53,16 @@
             justify-content: space-between; /* Zweispaltiges Layout */
         }
         #market, #travel-options {
-            min-height: 350px; /* Dynamische Anpassung, Mindesthöhe */
+            min-height: 350px; /* Mindesthöhe */
+            max-height: 350px; /* Feste maximale Höhe */
+            overflow: auto; /* Überschüssiger Inhalt scrollt */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             margin: 0;
             background-color: transparent; /* Platzhalter für Hintergrundbild */
             /* background-image: url('path/to/image.jpg'); Zukünftiges Bild */
+            position: relative; /* Referenz für absolute Positionierung */
         }
         #market-info, #travel-info {
             height: 60px; /* Feste Höhe für Szene-Informationen */
@@ -67,7 +71,9 @@
         #market-buttons, #planet-buttons {
             display: flex;
             flex-direction: column;
-            margin-top: 100px; /* Aktions-Menü beibehalten */
+            position: absolute; /* Feste Positionierung */
+            top: 100px; /* Fester Abstand vom oberen Rand */
+            width: 100%; /* Volle Breite */
         }
         button {
             padding: 10px 20px;
@@ -252,12 +258,14 @@
             document.getElementById("message").textContent = "Reise abgebrochen.";
             // Stabilisiere das Aktions-Menü-Layout
             const marketButtons = document.getElementById("market-buttons");
-            marketButtons.style.marginTop = "100px"; // Zurücksetzen auf ursprünglichen Wert
+            marketButtons.style.top = "100px"; // Zurücksetzen auf ursprünglichen Wert
             marketButtons.style.transition = "none"; // Verhindert Übergangseffekte
             // Erzwinge Neuzeichnen, um Layout zu stabilisieren
             marketButtons.offsetHeight; // Trigger reflow
-            // Zurücksetzen der Container-Höhe, um Konsistenz zu gewährleisten
-            document.getElementById("game-container").style.height = ""; // Entfernt festgelegte Höhe
+            // Zurücksetzen der Container-Höhe
+            const gameContainer = document.getElementById("game-container");
+            gameContainer.style.height = gameContainer.scrollHeight + "px"; // Passt Höhe an Inhalt an
+            gameContainer.style.height = ""; // Entfernt festgelegte Höhe
             updateDisplay();
         }
 
