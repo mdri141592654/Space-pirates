@@ -26,6 +26,7 @@
             color: white;
             border: none;
             cursor: pointer;
+            touch-action: manipulation; /* Verhindert Doppeltipp-Zoomen */
         }
         button:hover {
             background-color: #45a049;
@@ -35,6 +36,12 @@
         }
         #travel-options {
             display: none; /* Versteckt Planetenwahl initial */
+        }
+        #build-version {
+            font-size: 12px;
+            color: #888;
+            margin-top: 20px;
+            text-align: right;
         }
     </style>
 </head>
@@ -69,6 +76,7 @@
             <button onclick="cancelTravel()">Abbrechen</button>
         </div>
         <div id="message"></div>
+        <div id="build-version">Build 0.1.1</div>
     </div>
 
     <script>
