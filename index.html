@@ -23,8 +23,6 @@
             border-radius: 10px;
             display: flex;
             flex-direction: column;
-            flex: 1;
-            touch-action: manipulation;
         }
         #title {
             width: 100%;
@@ -46,12 +44,19 @@
         #status p {
             margin: 5px 0;
         }
+        #image-placeholder {
+            height: 50px; /* Platz für zukünftiges Bild */
+            margin-bottom: 5px;
+        }
         #market, #travel-options {
-            height: 300px; /* Fixierte Höhe für alle Szenen */
+            height: 250px; /* Fixierte Höhe für alle Szenen */
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Inhalt oben ausrichten */
+            justify-content: flex-start;
             margin: 0;
+        }
+        #market-info {
+            margin-bottom: 5px;
         }
         #market-buttons, #planet-buttons {
             display: flex;
@@ -66,13 +71,13 @@
             cursor: pointer;
             touch-action: manipulation;
             font-size: 14px;
-            width: 100%; /* Gleiche Breite wie Space Pirates */
+            width: 100%;
             box-sizing: border-box;
             text-align: center;
-            height: 40px; /* Fixierte Höhe */
+            height: 40px;
             display: flex;
             align-items: center;
-            justify-content: center; /* Vertikal und horizontal zentriert */
+            justify-content: center;
             line-height: 20px;
         }
         button:last-child {
@@ -84,9 +89,6 @@
         #travel-options {
             display: none;
         }
-        #image-placeholder {
-            display: none; /* Für zukünftige Bilder */
-        }
         #message {
             margin: 5px 0;
             font-size: 14px;
@@ -94,7 +96,7 @@
         #build-version {
             font-size: 12px;
             color: #888;
-            margin-top: 10px;
+            margin-top: auto; /* Ans Ende des Containers schieben */
             text-align: right;
         }
     </style>
@@ -115,10 +117,12 @@
         <div id="message"></div>
         <div id="image-placeholder"></div>
         <div id="market">
-            <h2>Markt</h2>
-            <p>Waren auf <span id="market-location">Erde</span>:</p>
-            <p>Lebensmittel: <span id="food-price">10</span> Credits/Einheit</p>
-            <p>Treibstoff: <span id="fuel-price">20</span> Credits/Einheit</p>
+            <div id="market-info">
+                <h2>Markt</h2>
+                <p>Waren auf <span id="market-location">Erde</span>:</p>
+                <p>Lebensmittel: <span id="food-price">10</span> Credits/Einheit</p>
+                <p>Treibstoff: <span id="fuel-price">20</span> Credits/Einheit</p>
+            </div>
             <div id="market-buttons">
                 <button onclick="buyItem('Lebensmittel', 10)">Lebensmittel kaufen</button>
                 <button onclick="sellItem('Lebensmittel', 10)">Lebensmittel verkaufen</button>
@@ -128,12 +132,14 @@
             </div>
         </div>
         <div id="travel-options">
-            <h2>Wähle einen Planeten</h2>
+            <div id="travel-info">
+                <h2>Wähle einen Planeten</h2>
+            </div>
             <div id="planet-buttons">
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.7</div>
+        <div id="build-version">Build 0.1.2.8</div>
     </div>
 
     <script>
