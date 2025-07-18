@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Pirates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
+            padding: 0;
             background-color: #000000;
-            overflow: hidden;
-        }
-        #startScreen {
-            position: absolute;
             width: 1170px;
             height: 1985px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            overflow: hidden;
         }
-        #startField {
+
+        .header-field {
             position: absolute;
             top: 48px;
             left: 70px;
@@ -29,173 +26,29 @@
             justify-content: center;
             align-items: center;
         }
-        #startButton {
-            padding: 20px 40px;
-            font-size: 24px;
-            background-color: #1a3c4d;
-            color: #ffffff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #startButton:hover {
-            background-color: #2e5f7a;
-        }
-        #gameCanvas {
-            display: none;
+
+        .header-text {
+            width: 882px;
+            height: 98px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 48px;
+            color: #f8c22b;
+            text-align: center;
+            line-height: 98px;
+            -webkit-text-stroke: 3px #000f21;
+            text-stroke: 3px #000f21;
         }
     </style>
 </head>
 <body>
-    <div id="startScreen">
-        <div id="startField">
-            <button id="startButton">Start Game</button>
-        </div>
+    <div class="header-field">
+        <div class="header-text">Space Pirates</div>
     </div>
-    <canvas id="gameCanvas" width="1170" height="1985"></canvas>
 
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const startScreen = document.getElementById('startScreen');
-        const startButton = document.getElementById('startButton');
-
-        // Spieler-Objekt
-        let player = {
-            x: 585, // Mitte des Canvas
-            y: 1800, // Unten
-            width: 50,
-            height: 50,
-            speed: 5,
-            dx: 0,
-            dy: 0
-        };
-
-        // Geschosse
-        let bullets = [];
-        // Gegner
-        let enemies = [];
-        let score = 0;
-        let gameRunning = false;
-
-        // Event-Listener für Start-Button
-        startButton.addEventListener('click', () => {
-            startScreen.style.display = 'none';
-            canvas.style.display = 'block';
-            gameRunning = true;
-            spawnEnemies();
-            gameLoop();
-        });
-
-        // Tastatureingaben
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') player.dx = -player.speed;
-            if (e.key === 'ArrowRight') player.dx = player.speed;
-            if (e.key === 'ArrowUp') player.dy = -player.speed;
-            if (e.key === 'ArrowDown') player.dy = player.speed;
-            if (e.key === ' ' && gameRunning) shootBullet();
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') player.dx = 0;
-            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') player.dy = 0;
-        });
-
-        // Spieler zeichnen
-        function drawPlayer() {
-            ctx.fillStyle = '#00ff00';
-            ctx.fillRect(player.x, player.y, player.width, player.height);
-        }
-
-        // Geschosse zeichnen und bewegen
-        function drawBullets() {
-            bullets.forEach((bullet, index) => {
-                bullet.y -= 10;
-                ctx.fillStyle = '#ff0000';
-                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-                if (bullet.y < 0) bullets.splice(index, 1);
-            });
-        }
-
-        // Gegner zeichnen und bewegen
-        function drawEnemies() {
-            enemies.forEach((enemy, index) => {
-                enemy.y += 3;
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
-                if (enemy.y > canvas.height) enemies.splice(index, 1);
-            });
-        }
-
-        // Kollisionen prüfen
-        function checkCollisions() {
-            bullets.forEach((bullet, bIndex) => {
-                enemies.forEach((enemy, eIndex) => {
-                    if (
-                        bullet.x < enemy.x + enemy.width &&
-                        bullet.x + bullet.width > enemy.x &&
-                        bullet.y < enemy.y + enemy.height &&
-                        bullet.y + bullet.height > enemy.y
-                    ) {
-                        enemies.splice(eIndex, 1);
-                        bullets.splice(bIndex, 1);
-                        score += 10;
-                    }
-                });
-            });
-        }
-
-        // Schießen
-        function shootBullet() {
-            bullets.push({
-                x: player.x + player.width / 2 - 5,
-                y: player.y,
-                width: 10,
-                height: 20
-            });
-        }
-
-        // Gegner spawnen
-        function spawnEnemies() {
-            setInterval(() => {
-                if (gameRunning) {
-                    enemies.push({
-                        x: Math.random() * (canvas.width - 50),
-                        y: 0,
-                        width: 50,
-                        height: 50
-                    });
-                }
-            }, 2000);
-        }
-
-        // Spiel-Loop
-        function gameLoop() {
-            if (!gameRunning) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#000000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Spieler bewegen
-            player.x += player.dx;
-            player.y += player.dy;
-            if (player.x < 0) player.x = 0;
-            if (player.x > canvas.width - player.width) player.x = canvas.width - player.width;
-            if (player.y < 0) player.y = 0;
-            if (player.y > canvas.height - player.height) player.y = canvas.height - player.height;
-
-            drawPlayer();
-            drawBullets();
-            drawEnemies();
-            checkCollisions();
-
-            // Score anzeigen
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '24px Arial';
-            ctx.fillText(`Score: ${score}`, 20, 30);
-
-            requestAnimationFrame(gameLoop);
-        }
+        // Hier kannst du JavaScript für zukünftige Interaktivität hinzufügen
+        console.log("Space Pirates initialized");
     </script>
 </body>
 </html>
