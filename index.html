@@ -18,7 +18,7 @@
         #game-container {
             width: 100%;
             margin: 0 auto;
-            background-color: #333;
+            background-color: transparent; /* Grauer Kasten entfernt */
             padding: 10px;
             border-radius: 10px;
             display: flex;
@@ -47,7 +47,7 @@
             justify-content: space-between; /* Zweispaltiges Layout */
         }
         #market, #travel-options {
-            height: 350px; /* Reduzierte Höhe für ausgewogenes Layout */
+            height: 350px; /* Beibehaltene Höhe */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -62,7 +62,7 @@
         #market-buttons, #planet-buttons {
             display: flex;
             flex-direction: column;
-            margin-top: 100px; /* Aktions-Menü nach oben verschieben */
+            margin-top: 100px; /* Aktions-Menü näher an Beschriftung */
         }
         button {
             padding: 10px 20px;
@@ -74,7 +74,7 @@
             touch-action: manipulation;
             font-size: 14px;
             width: 100%;
-            box-sizing: border caja;
+            box-sizing: border-box;
             text-align: center;
             height: 40px;
             display: flex;
@@ -138,7 +138,7 @@
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.16</div>
+        <div id="build-version">Build 0.1.2.17</div>
     </div>
 
     <script>
