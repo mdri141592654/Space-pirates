@@ -30,8 +30,11 @@
         button:hover {
             background-color: #45a049;
         }
-        #status, #market {
+        #status, #market, #travel-options {
             margin: 20px 0;
+        }
+        #travel-options {
+            display: none; /* Versteckt Planetenwahl initial */
         }
     </style>
 </head>
@@ -56,9 +59,14 @@
             <button onclick="buyItem('Treibstoff', 20)">Treibstoff kaufen</button>
             <button onclick="sellItem('Treibstoff', 20)">Treibstoff verkaufen</button>
         </div>
-        <div>
+        <div id="actions">
             <h2>Aktionen</h2>
-            <button onclick="travel()">Reisen</button>
+            <button onclick="showTravelOptions()">Reisen</button>
+        </div>
+        <div id="travel-options">
+            <h2>Wähle einen Planeten</h2>
+            <div id="planet-buttons"></div>
+            <button onclick="cancelTravel()">Abbrechen</button>
         </div>
         <div id="message"></div>
     </div>
@@ -117,18 +125,52 @@
             updateDisplay();
         }
 
-        function travel() {
-            console.log("Versuche zu reisen");
-            let newPlanet = planets[Math.floor(Math.random() * planets.length)];
-            if (newPlanet.name !== player.location && player.inventory.Treibstoff > 0) {
+        function showTravelOptions() {
+            console.log("Zeige Planetenwahl");
+            // Verstecke Markt und Aktionen
+            document.getElementById("market").style.display = "none";
+            document.getElementById("actions").style.display = "none";
+            // Zeige Planetenwahl
+            document.getElementById("travel-options").style.display = "block";
+            // Erstelle Buttons für alle Planeten außer dem aktuellen
+            let planetButtons = document.getElementById("planet-buttons");
+            planetButtons.innerHTML = ""; // Lösche vorherige Buttons
+            planets.forEach(planet => {
+                if (planet.name !== player.location) {
+                    let button = document.createElement("button");
+                    button.textContent = `Reisen nach ${planet.name}`;
+                    button.onclick = () => travelTo(planet.name);
+                    planetButtons.appendChild(button);
+                }
+            });
+            document.getElementById("message").textContent = "Wähle einen Planeten zum Reisen.";
+        }
+
+        function travelTo(planetName) {
+            console.log(`Versuche nach ${planetName} zu reisen`);
+            if (player.inventory.Treibstoff > 0) {
                 player.inventory.Treibstoff -= 1;
                 player.ship.usedSpace -= 1;
-                player.location = newPlanet.name;
+                player.location = planetName;
                 player.day += 1;
                 document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
+                // Zeige Markt und Aktionen wieder an, verstecke Planetenwahl
+                document.getElementById("market").style.display = "block";
+                document.getElementById("actions").style.display = "block";
+                document.getElementById("travel-options").style.display = "none";
             } else {
-                document.getElementById("message").textContent = "Nicht genug Treibstoff oder bereits hier!";
+                document.getElementById("message").textContent = "Nicht genug Treibstoff!";
             }
+            updateDisplay();
+        }
+
+        function cancelTravel() {
+            console.log("Reise abgebrochen");
+            // Zeige Markt und Aktionen wieder an, verstecke Planetenwahl
+            document.getElementById("market").style.display = "block";
+            document.getElementById("actions").style.display = "block";
+            document.getElementById("travel-options").style.display = "none";
+            document.getElementById("message").textContent = "Reise abgebrochen.";
             updateDisplay();
         }
 
