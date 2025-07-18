@@ -17,7 +17,6 @@
             display: flex;
             flex-direction: column;
             height: 100vh; /* Vollständige Bildschirmhöhe */
-            /* overflow: hidden entfernt, um Inhalt sichtbar zu halten */
         }
         #game-container {
             width: 100%;
@@ -26,7 +25,8 @@
             border-radius: 10px;
             display: flex;
             flex-direction: column;
-            flex: 1 0 auto; /* Anpassung für flexible Höhe */
+            flex: 1 0 auto; /* Flexible Höhe ohne Überlauf */
+            min-height: 0; /* Verhindert Überlauf durch Flex */
         }
         #title {
             width: 100%;
@@ -52,7 +52,7 @@
             justify-content: space-between; /* Zweispaltiges Layout */
         }
         #market, #travel-options {
-            height: 350px; /* Beibehaltene Höhe */
+            height: 350px; /* Feste Höhe für Konsistenz */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -145,7 +145,7 @@
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.19</div>
+        <div id="build-version">Build 0.1.2.20</div>
     </div>
 
     <script>
@@ -250,8 +250,12 @@
             document.getElementById("market").style.display = "block";
             document.getElementById("travel-options").style.display = "none";
             document.getElementById("message").textContent = "Reise abgebrochen.";
-            // Reset der Layout-Höhe, um das Aktions-Menü stabil zu halten
-            document.getElementById("market-buttons").style.marginTop = "100px"; // Zurücksetzen auf ursprünglichen Wert
+            // Stabilisiere das Aktions-Menü-Layout
+            const marketButtons = document.getElementById("market-buttons");
+            marketButtons.style.marginTop = "100px"; // Zurücksetzen auf ursprünglichen Wert
+            marketButtons.style.transition = "none"; // Verhindert Übergangseffekte
+            // Erzwinge Neuzeichnen, um Layout zu stabilisieren
+            marketButtons.offsetHeight; // Trigger reflow
             updateDisplay();
         }
 
