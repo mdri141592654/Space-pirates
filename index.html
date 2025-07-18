@@ -44,16 +44,14 @@
         #status p {
             margin: 5px 0;
         }
-        #image-placeholder {
-            height: 50px; /* Platz für zukünftiges Bild */
-            margin-bottom: 5px;
-        }
         #market, #travel-options {
             height: 250px; /* Fixierte Höhe für alle Szenen */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             margin: 0;
+            background-color: transparent; /* Platzhalter für Hintergrundbild */
+            /* background-image: url('path/to/image.jpg'); Zukünftiges Bild */
         }
         #market-info, #travel-info {
             height: 60px; /* Feste Höhe für Szene-Informationen */
@@ -116,7 +114,6 @@
             <p>Credits: <span id="credits">1000</span></p>
         </div>
         <div id="message"></div>
-        <div id="image-placeholder"></div>
         <div id="market">
             <div id="market-info">
                 <h2>Markt</h2>
@@ -140,7 +137,7 @@
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.9</div>
+        <div id="build-version">Build 0.1.2.10</div>
     </div>
 
     <script>
