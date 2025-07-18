@@ -48,17 +48,6 @@
             -webkit-text-stroke: 3px #000f21;
             text-stroke: 3px #000f21;
         }
-
-        .lower-box {
-            position: absolute;
-            top: 225px;
-            left: 70px;
-            width: 1030px;
-            height: 200px;
-            background-color: #01202f;
-            border: 10px solid #005f5b;
-            box-sizing: border-box;
-        }
     </style>
 </head>
 <body>
@@ -66,11 +55,16 @@
     <div class="title-box">
         <div class="title">SPACE PIRATES</div>
     </div>
-    <div class="lower-box"></div>
 
     <script>
-        // Hier kann später die Spiellogik hinzugefügt werden
+        // Platzhalter für zukünftige Spiellogik
         console.log("Space Pirates initialized");
+
+        // Beispiel: Klick-Event für den Titel, um das Spiel zu starten
+        document.querySelector('.title-box').addEventListener('click', () => {
+            alert('Willkommen bei Space Pirates! Klicke, um das Spiel zu starten.');
+            // Hier könnte später die Spiellogik gestartet werden, z.B. ein Canvas-Spiel
+        });
     </script>
 </body>
 </html>
