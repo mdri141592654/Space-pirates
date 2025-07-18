@@ -71,8 +71,7 @@
         #market-buttons, #planet-buttons {
             display: flex;
             flex-direction: column;
-            position: absolute; /* Feste Positionierung */
-            top: 150px; /* Verschiebung um 50px nach unten */
+            margin-top: 150px; /* Verschiebung um 50px nach unten */
             width: 100%; /* Volle Breite */
         }
         button {
@@ -198,88 +197,3 @@
             } else {
                 document.getElementById("message").textContent = "Nicht genug Credits oder Frachtraum!";
             }
-            updateDisplay();
-        }
-
-        function sellItem(item, price) {
-            console.log(`Versuche ${item} für ${price} Credits zu verkaufen`);
-            if (player.inventory[item] > 0) {
-                player.credits += price;
-                player.inventory[item] -= 1;
-                player.ship.usedSpace -= 1;
-                document.getElementById("message").textContent = `${item} verkauft!`;
-            } else {
-                document.getElementById("message").textContent = `Keine ${item} im Inventar!`;
-            }
-            updateDisplay();
-        }
-
-        function showTravelOptions() {
-            console.log("Zeige Planetenwahl");
-            document.getElementById("market").style.display = "none";
-            document.getElementById("travel-options").style.display = "block";
-            let planetButtons = document.getElementById("planet-buttons");
-            planetButtons.innerHTML = "";
-            planets.forEach(planet => {
-                if (planet.name !== player.location) {
-                    let button = document.createElement("button");
-                    button.textContent = `Reisen nach ${planet.name}`;
-                    button.onclick = () => travelTo(planet.name);
-                    planetButtons.appendChild(button);
-                }
-            });
-            let cancelButton = document.createElement("button");
-            cancelButton.textContent = "Abbrechen";
-            cancelButton.onclick = cancelTravel;
-            planetButtons.appendChild(cancelButton);
-            document.getElementById("message").textContent = "Wähle einen Planeten zum Reisen.";
-        }
-
-        function travelTo(planetName) {
-            console.log(`Versuche nach ${planetName} zu reisen`);
-            if (player.inventory.Treibstoff > 0) {
-                player.inventory.Treibstoff -= 1;
-                player.ship.usedSpace -= 1;
-                player.location = planetName;
-                player.day += 1;
-                document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
-                document.getElementById("market").style.display = "block";
-                document.getElementById("travel-options").style.display = "none";
-            } else {
-                document.getElementById("message").textContent = "Nicht genug Treibstoff!";
-            }
-            updateDisplay();
-        }
-
-        function cancelTravel() {
-            console.log("Reise abgebrochen");
-            document.getElementById("market").style.display = "block";
-            document.getElementById("travel-options").style.display = "none";
-            document.getElementById("message").textContent = "Reise abgebrochen.";
-            // Stabilisiere das Aktions-Menü-Layout
-            const marketButtons = document.getElementById("market-buttons");
-            marketButtons.style.top = "150px"; // Zurücksetzen auf angepassten Wert
-            marketButtons.style.transition = "none"; // Verhindert Übergangseffekte
-            // Erzwinge Neuzeichnen, um Layout zu stabilisieren
-            marketButtons.offsetHeight; // Trigger reflow
-            // Zurücksetzen der Container-Höhe
-            const gameContainer = document.getElementById("game-container");
-            gameContainer.style.height = gameContainer.scrollHeight + "px"; // Passt Höhe an Inhalt an
-            gameContainer.style.height = ""; // Entfernt festgelegte Höhe
-            updateDisplay();
-        }
-
-        // Verhindere Doppeltipp-Zoomen
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = new Date().getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        updateDisplay();
-    </script>
-</body>
-</html>
