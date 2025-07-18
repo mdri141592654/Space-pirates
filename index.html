@@ -1,307 +1,76 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Pirates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box; /* Globale Anwendung für konsistente Breiten */
-        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            margin: 0;
-            padding: 5px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh; /* Vollständige Bildschirmhöhe */
-        }
-        #game-container {
-            width: 100%;
-            background-color: transparent; /* Grauer Kasten entfernt */
-            padding: 10px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            flex: 1 0 auto; /* Flexible Höhe ohne Überlauf */
-            min-height: 0; /* Verhindert Überlauf durch Flex */
-            position: relative; /* Referenz für absolut positionierte Buttons */
-        }
-        #title {
-            width: 100%;
-            background-color: #222;
-            padding: 10px 0;
-            margin-bottom: 5px;
-            border-radius: 5px;
-            z-index: 2; /* Sicherstellen, dass es nicht die Buttons überlagert */
-        }
-        #title h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        #status {
-            background-color: #222;
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 5px;
-            width: 100%; /* Sicherstellen, dass die volle Breite genutzt wird */
-            z-index: 2; /* Sicherstellen, dass es nicht die Buttons überlagert */
-        }
-        #status p {
-            margin: 5px 0;
-            display: flex;
-            justify-content: space-between; /* Zweispaltiges Layout */
-        }
-        #market, #travel-options {
-            height: 350px; /* Feste Höhe für Konsistenz */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
             margin: 0;
             padding: 0;
-            background-color: transparent; /* Platzhalter für Hintergrundbild */
-            /* background-image: url('path/to/image.jpg'); Zukünftiges Bild */
-            position: relative; /* Sicherstellen, dass Kinder korrekt positioniert werden */
-            z-index: 1; /* Niedriger z-index als Buttons */
-        }
-        #market-info, #travel-info {
-            height: 60px; /* Feste Höhe für Szene-Informationen */
-            margin-bottom: 5px;
+            background-color: #000000;
+            width: 1170px;
+            height: 1985px;
             overflow: hidden;
+        }
+
+        .version {
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: #6366A0;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        .title-box {
+            position: absolute;
+            top: 48px;
+            left: 70px;
+            width: 1030px;
+            height: 175px;
+            background-color: #020809;
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            z-index: 2; /* Über dem Container, aber unter den Buttons */
-        }
-        #market-info h2, #travel-info h2 {
-            margin: 0;
-            font-size: 18px;
-            line-height: 1.2;
-        }
-        #market-info p, #travel-info p {
-            margin: 0;
-            font-size: 14px;
-            line-height: 1.2;
-        }
-        #market-buttons, #planet-buttons {
-            position: absolute; /* Absolut positioniert relativ zu #game-container */
-            top: 360px; /* Für absolute Höhe von 375px (5px body + 10px container + 360px) */
-            left: 10px; /* Anpassung an das Padding von #game-container */
-            right: 10px; /* Anpassung an das Padding von #game-container */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            z-index: 3; /* Über allen anderen Elementen */
-        }
-        button {
-            padding: 10px 20px;
-            margin-bottom: 5px; /* Gleichmäßiger Abstand */
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            touch-action: manipulation;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
-            text-align: center;
-            height: 40px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            line-height: 20px;
         }
-        button:last-child {
-            margin-bottom: 0; /* Kein Abstand am letzten Button */
+
+        .title {
+            width: 882px;
+            height: 98px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 64px;
+            color: #f8c22b;
+            text-align: center;
+            line-height: 98px;
+            -webkit-text-stroke: 3px #000f21;
+            text-stroke: 3px #000f21;
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        #travel-options {
-            display: none;
-        }
-        #message {
-            margin: 5px 0;
-            font-size: 14px;
-            z-index: 2; /* Über dem Container, aber unter den Buttons */
-        }
-        #build-version {
-            font-size: 12px;
-            color: #888;
-            position: absolute; /* Absolut positioniert */
-            top: 10px;
-            right: 10px;
-            z-index: 10; /* Über allen anderen Elementen */
+
+        .lower-box {
+            position: absolute;
+            top: 225px;
+            left: 70px;
+            width: 1030px;
+            height: 200px;
+            background-color: #01202f;
+            border: 10px solid #005f5b;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
-    <div id="game-container">
-        <div id="title">
-            <h1>Space Pirates</h1>
-        </div>
-        <div id="status">
-            <p><span>Schiff: <span id="ship-condition">100%</span></span><span><span id="credits">1000</span>: Credits</span></p>
-            <p><span>Ort: <span id="location">Erde</span></span><span><span id="day">2</span>: Spieltag</span></p>
-            <p><span id="ship">Kleinraumschiff: 0/10</span></p>
-            <p><span>Fracht: <span id="inventory">Leer</span></span></p>
-        </div>
-        <div id="message">Bereit…</div>
-        <div id="market">
-            <div id="market-info">
-                <h2>Markt</h2>
-                <p>Waren auf <span id="market-location">Erde</span>:</p>
-                <p>Lebensmittel: <span id="food-price">10</span> Credits/Einheit</p>
-                <p>Treibstoff: <span id="fuel-price">20</span> Credits/Einheit</p>
-            </div>
-            <div id="market-buttons">
-                <button onclick="buyItem('Lebensmittel', 10)">Lebensmittel kaufen</button>
-                <button onclick="sellItem('Lebensmittel', 10)">Lebensmittel verkaufen</button>
-                <button onclick="buyItem('Treibstoff', 20)">Treibstoff kaufen</button>
-                <button onclick="sellItem('Treibstoff', 20)">Treibstoff verkaufen</button>
-                <button onclick="showTravelOptions()">Reisen</button>
-            </div>
-        </div>
-        <div id="travel-options">
-            <div id="travel-info">
-                <h2>Wähle einen Planeten</h2>
-            </div>
-            <div id="planet-buttons">
-                <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
-            </div>
-        </div>
-        <div id="build-version">0.1.2.21</div>
+    <div class="version">0.0.1</div>
+    <div class="title-box">
+        <div class="title">SPACE PIRATES</div>
     </div>
+    <div class="lower-box"></div>
 
     <script>
-        let player = {
-            credits: 1000,
-            ship: { name: "Kleinraumschiff", cargoSpace: 10, usedSpace: 0, condition: 100 },
-            inventory: { Lebensmittel: 0, Treibstoff: 0 },
-            location: "Erde",
-            day: 2
-        };
-
-        let planets = [
-            { name: "Erde", prices: { Lebensmittel: 10, Treibstoff: 20 } },
-            { name: "Mars", prices: { Lebensmittel: 15, Treibstoff: 25 } },
-            { name: "Jupiter", prices: { Lebensmittel: 8, Treibstoff: 30 } }
-        ];
-
-        function updateDisplay() {
-            document.getElementById("credits").textContent = player.credits;
-            document.getElementById("ship").textContent = `${player.ship.name}: ${player.ship.usedSpace}/${player.ship.cargoSpace}`;
-            document.getElementById("ship-condition").textContent = `${player.ship.condition}%`;
-            document.getElementById("location").textContent = player.location;
-            // Nur Ressourcen mit Menge > 0 anzeigen
-            const inventoryItems = Object.entries(player.inventory)
-                .filter(([_, qty]) => qty > 0)
-                .map(([item, qty]) => `${item}: ${qty}`)
-                .join(", ");
-            document.getElementById("inventory").textContent = inventoryItems || "Leer";
-            document.getElementById("day").textContent = player.day;
-            let currentPlanet = planets.find(p => p.name === player.location);
-            document.getElementById("market-location").textContent = player.location;
-            document.getElementById("food-price").textContent = currentPlanet.prices.Lebensmittel;
-            document.getElementById("fuel-price").textContent = currentPlanet.prices.Treibstoff;
-            console.log("Display updated:", player);
-        }
-
-        function buyItem(item, price) {
-            console.log(`Versuche ${item} für ${price} Credits zu kaufen`);
-            if (player.credits >= price && player.ship.usedSpace < player.ship.cargoSpace) {
-                player.credits -= price;
-                player.inventory[item] = (player.inventory[item] || 0) + 1;
-                player.ship.usedSpace += 1;
-                document.getElementById("message").textContent = `${item} gekauft!`;
-            } else {
-                document.getElementById("message").textContent = "Nicht genug Credits oder Frachtraum!";
-            }
-            updateDisplay();
-        }
-
-        function sellItem(item, price) {
-            console.log(`Versuche ${item} für ${price} Credits zu verkaufen`);
-            if (player.inventory[item] > 0) {
-                player.credits += price;
-                player.inventory[item] -= 1;
-                player.ship.usedSpace -= 1;
-                document.getElementById("message").textContent = `${item} verkauft!`;
-            } else {
-                document.getElementById("message").textContent = `Keine ${item} im Inventar!`;
-            }
-            updateDisplay();
-        }
-
-        function showTravelOptions() {
-            console.log("Zeige Planetenwahl");
-            document.getElementById("market").style.display = "none";
-            document.getElementById("travel-options").style.display = "block";
-            let planetButtons = document.getElementById("planet-buttons");
-            planetButtons.innerHTML = "";
-            planets.forEach(planet => {
-                if (planet.name !== player.location) {
-                    let button = document.createElement("button");
-                    button.textContent = `Reisen nach ${planet.name}`;
-                    button.onclick = () => travelTo(planet.name);
-                    planetButtons.appendChild(button);
-                }
-            });
-            let cancelButton = document.createElement("button");
-            cancelButton.textContent = "Abbrechen";
-            cancelButton.onclick = cancelTravel;
-            planetButtons.appendChild(cancelButton);
-            document.getElementById("message").textContent = "Wähle einen Planeten zum Reisen.";
-            
-            // Stabilisiere Layout
-            planetButtons.style.top = "360px"; // Für absolute Höhe von 375px
-            planetButtons.style.transition = "none";
-            planetButtons.offsetHeight; // Trigger reflow
-        }
-
-        function travelTo(planetName) {
-            console.log(`Versuche nach ${planetName} zu reisen`);
-            if (player.inventory.Treibstoff > 0) {
-                player.inventory.Treibstoff -= 1;
-                player.ship.usedSpace -= 1;
-                player.location = planetName;
-                player.day += 1;
-                document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
-                document.getElementById("market").style.display = "block";
-                document.getElementById("travel-options").style.display = "none";
-            } else {
-                document.getElementById("message").textContent = "Nicht genug Treibstoff!";
-            }
-            updateDisplay();
-        }
-
-        function cancelTravel() {
-            console.log("Reise abgebrochen");
-            document.getElementById("market").style.display = "block";
-            document.getElementById("travel-options").style.display = "none";
-            document.getElementById("message").textContent = "Reise abgebrochen.";
-            
-            // Stabilisiere das Aktions-Menü-Layout
-            const marketButtons = document.getElementById("market-buttons");
-            marketButtons.style.top = "360px"; // Für absolute Höhe von 375px
-            marketButtons.style.transition = "none";
-            marketButtons.offsetHeight; // Trigger reflow
-            updateDisplay();
-        }
-
-        // Verhindere Doppeltipp-Zoomen
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = new Date().getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        updateDisplay();
+        // Hier kann später die Spiellogik hinzugefügt werden
+        console.log("Space Pirates initialized");
     </script>
 </body>
 </html>
