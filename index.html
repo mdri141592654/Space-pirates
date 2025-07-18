@@ -52,22 +52,42 @@
             justify-content: space-between; /* Zweispaltiges Layout */
         }
         #market, #travel-options {
-            min-height: 350px; /* Dynamische Anpassung, Mindesthöhe */
+            height: 350px; /* Feste Höhe für Konsistenz */
+            position: relative; /* Referenz für absolute Positionierung der Buttons */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             margin: 0;
+            padding: 0;
             background-color: transparent; /* Platzhalter für Hintergrundbild */
             /* background-image: url('path/to/image.jpg'); Zukünftiges Bild */
         }
         #market-info, #travel-info {
             height: 60px; /* Feste Höhe für Szene-Informationen */
             margin-bottom: 5px;
-        }
-        #market-buttons, #planet-buttons {
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            margin-top: 100px; /* Aktions-Menü beibehalten */
+            justify-content: center;
+        }
+        #market-info h2, #travel-info h2 {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+        #market-info p, #travel-info p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.2;
+        }
+        #market-buttons, #planet-buttons {
+            position: absolute; /* Absolut positioniert relativ zu #market oder #travel-options */
+            top: 100px; /* Fester Abstand vom oberen Rand */
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         button {
             padding: 10px 20px;
@@ -145,7 +165,7 @@
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.20</div>
+        <div id="build-version">0.1.2.21</div>
     </div>
 
     <script>
@@ -227,6 +247,11 @@
             cancelButton.onclick = cancelTravel;
             planetButtons.appendChild(cancelButton);
             document.getElementById("message").textContent = "Wähle einen Planeten zum Reisen.";
+            
+            // Stabilisiere Layout
+            planetButtons.style.top = "100px";
+            planetButtons.style.transition = "none";
+            planetButtons.offsetHeight; // Trigger reflow
         }
 
         function travelTo(planetName) {
@@ -234,45 +259,4 @@
             if (player.inventory.Treibstoff > 0) {
                 player.inventory.Treibstoff -= 1;
                 player.ship.usedSpace -= 1;
-                player.location = planetName;
-                player.day += 1;
-                document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
-                document.getElementById("market").style.display = "block";
-                document.getElementById("travel-options").style.display = "none";
-            } else {
-                document.getElementById("message").textContent = "Nicht genug Treibstoff!";
-            }
-            updateDisplay();
-        }
-
-        function cancelTravel() {
-            console.log("Reise abgebrochen");
-            document.getElementById("market").style.display = "block";
-            document.getElementById("travel-options").style.display = "none";
-            document.getElementById("message").textContent = "Reise abgebrochen.";
-            // Stabilisiere das Aktions-Menü-Layout
-            const marketButtons = document.getElementById("market-buttons");
-            marketButtons.style.marginTop = "100px"; // Zurücksetzen auf ursprünglichen Wert
-            marketButtons.style.transition = "none"; // Verhindert Übergangseffekte
-            // Erzwinge Neuzeichnen, um Layout zu stabilisieren
-            marketButtons.offsetHeight; // Trigger reflow
-            // Zurücksetzen der Container-Höhe
-            const gameContainer = document.getElementById("game-container");
-            gameContainer.style.height = ""; // Entfernt festgelegte Höhe, um Flex zu nutzen
-            updateDisplay();
-        }
-
-        // Verhindere Doppeltipp-Zoomen
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = new Date().getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        updateDisplay();
-    </script>
-</body>
-</html>
+                player.location = planet
