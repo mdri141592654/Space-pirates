@@ -52,7 +52,7 @@
             justify-content: space-between; /* Zweispaltiges Layout */
         }
         #market, #travel-options {
-            height: 350px; /* Feste Höhe für Konsistenz */
+            min-height: 350px; /* Dynamische Anpassung, Mindesthöhe */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -101,11 +101,11 @@
             font-size: 14px;
         }
         #build-version {
-            font-size: 12px;
+            font-size: 6px; /* Schriftgröße halbiert */
             color: #888;
             position: absolute; /* Absolut positioniert */
-            top: 10px;
-            right: 10px;
+            top: 5px; /* Näher an die Ecke */
+            right: 5px; /* Näher an die Ecke */
             z-index: 10; /* Über anderen Inhalten */
         }
     </style>
@@ -145,7 +145,7 @@
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.20</div>
+        <div id="build-version">0.1.2.21</div>
     </div>
 
     <script>
@@ -256,6 +256,8 @@
             marketButtons.style.transition = "none"; // Verhindert Übergangseffekte
             // Erzwinge Neuzeichnen, um Layout zu stabilisieren
             marketButtons.offsetHeight; // Trigger reflow
+            // Zurücksetzen der Container-Höhe, um Konsistenz zu gewährleisten
+            document.getElementById("game-container").style.height = ""; // Entfernt festgelegte Höhe
             updateDisplay();
         }
 
