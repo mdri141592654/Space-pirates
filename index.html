@@ -61,6 +61,8 @@
             padding: 0;
             background-color: transparent; /* Platzhalter für Hintergrundbild */
             /* background-image: url('path/to/image.jpg'); Zukünftiges Bild */
+            position: relative; /* Sicherstellen, dass Kinder korrekt positioniert werden */
+            z-index: 1; /* Niedriger z-index als Buttons */
         }
         #market-info, #travel-info {
             height: 60px; /* Feste Höhe für Szene-Informationen */
@@ -69,6 +71,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            z-index: 2; /* Über dem Container, aber unter den Buttons */
         }
         #market-info h2, #travel-info h2 {
             margin: 0;
@@ -82,12 +85,13 @@
         }
         #market-buttons, #planet-buttons {
             position: absolute; /* Absolut positioniert relativ zu #game-container */
-            top: 360px; /* Angepasst für absolute Höhe von 375px (5px body + 10px container + 360px) */
+            top: 360px; /* Für absolute Höhe von 375px (5px body + 10px container + 360px) */
             left: 10px; /* Anpassung an das Padding von #game-container */
             right: 10px; /* Anpassung an das Padding von #game-container */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            z-index: 3; /* Über allen anderen Elementen */
         }
         button {
             padding: 10px 20px;
@@ -119,6 +123,7 @@
         #message {
             margin: 5px 0;
             font-size: 14px;
+            z-index: 2; /* Über dem Container, aber unter den Buttons */
         }
         #build-version {
             font-size: 12px;
@@ -126,7 +131,7 @@
             position: absolute; /* Absolut positioniert */
             top: 10px;
             right: 10px;
-            z-index: 10; /* Über anderen Inhalten */
+            z-index: 10; /* Über allen anderen Elementen */
         }
     </style>
 </head>
@@ -223,7 +228,7 @@
                 player.ship.usedSpace -= 1;
                 document.getElementById("message").textContent = `${item} verkauft!`;
             } else {
-                document.getElementById("message Penalized by Web::warning
+                document.getElementById("message").textContent = `Keine ${item} im Inventar!`;
             }
             updateDisplay();
         }
@@ -249,7 +254,7 @@
             document.getElementById("message").textContent = "Wähle einen Planeten zum Reisen.";
             
             // Stabilisiere Layout
-            planetButtons.style.top = "360px"; // Angepasst für absolute Höhe von 375px
+            planetButtons.style.top = "360px"; // Für absolute Höhe von 375px
             planetButtons.style.transition = "none";
             planetButtons.offsetHeight; // Trigger reflow
         }
@@ -261,11 +266,6 @@
                 player.ship.usedSpace -= 1;
                 player.location = planetName;
                 player.day += 1;
-                document.getElementById("message").textContent = ` `
-
-System: Es sieht so aus, als wäre ein kleiner Fehler im JavaScript-Code korrigiert worden:
-
-```javascript
                 document.getElementById("message").textContent = `Gereist nach ${player.location}! Tag ${player.day}`;
                 document.getElementById("market").style.display = "block";
                 document.getElementById("travel-options").style.display = "none";
@@ -283,7 +283,7 @@ System: Es sieht so aus, als wäre ein kleiner Fehler im JavaScript-Code korrigi
             
             // Stabilisiere das Aktions-Menü-Layout
             const marketButtons = document.getElementById("market-buttons");
-            marketButtons.style.top = "360px"; // Angepasst für absolute Höhe von 375px
+            marketButtons.style.top = "360px"; // Für absolute Höhe von 375px
             marketButtons.style.transition = "none";
             marketButtons.offsetHeight; // Trigger reflow
             updateDisplay();
