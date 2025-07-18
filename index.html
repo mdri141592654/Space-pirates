@@ -43,9 +43,11 @@
         }
         #status p {
             margin: 5px 0;
+            display: flex;
+            justify-content: space-between; /* Zweispaltiges Layout */
         }
         #market, #travel-options {
-            height: 300px; /* Erhöhte Höhe für mehr Platz */
+            height: 300px; /* Fixierte Höhe für alle Szenen */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -60,7 +62,7 @@
         #market-buttons, #planet-buttons {
             display: flex;
             flex-direction: column;
-            margin-top: 40px; /* Aktions-Menü weiter nach unten schieben */
+            margin-top: 40px; /* Aktions-Menü weiter nach unten */
         }
         button {
             padding: 10px 20px;
@@ -107,12 +109,10 @@
             <h1>Space Pirates</h1>
         </div>
         <div id="status">
-            <p>Schiff: <span id="ship-condition">100%</span></p>
-            <p><span id="ship">Kleinraumschiff (Frachtraum: 10)</span></p>
-            <p>Ort: <span id="location">Erde</span></p>
-            <p>Fracht: <span id="inventory">Leer</span></p>
-            <p>Spieltag: <span id="day">1</span></p>
-            <p>Credits: <span id="credits">1000</span></p>
+            <p><span>Schiff: <span id="ship-condition">100%</span></span><span><span id="credits">1000</span>: Credits</span></p>
+            <p><span>Ort: <span id="location">Erde</span></span><span><span id="day">2</span>: Spieltag</span></p>
+            <p><span id="ship">Kleinraumschiff: 0/10</span></p>
+            <p><span>Fracht: <span id="inventory">Leer</span></span></p>
         </div>
         <div id="message"></div>
         <div id="market">
@@ -138,7 +138,7 @@
                 <!-- Planeten-Buttons und Abbrechen werden hier eingefügt -->
             </div>
         </div>
-        <div id="build-version">Build 0.1.2.12</div>
+        <div id="build-version">Build 0.1.2.13</div>
     </div>
 
     <script>
@@ -147,7 +147,7 @@
             ship: { name: "Kleinraumschiff", cargoSpace: 10, usedSpace: 0, condition: 100 },
             inventory: { Lebensmittel: 0, Treibstoff: 0 },
             location: "Erde",
-            day: 1
+            day: 2 // Angepasst an Dokument
         };
 
         let planets = [
@@ -158,7 +158,7 @@
 
         function updateDisplay() {
             document.getElementById("credits").textContent = player.credits;
-            document.getElementById("ship").textContent = `${player.ship.name} (Frachtraum: ${player.ship.cargoSpace - player.ship.usedSpace}/${player.ship.cargoSpace})`;
+            document.getElementById("ship").textContent = `${player.ship.name}: ${player.ship.usedSpace}/${player.ship.cargoSpace}`;
             document.getElementById("ship-condition").textContent = `${player.ship.condition}%`;
             document.getElementById("location").textContent = player.location;
             // Nur Ressourcen mit Menge > 0 anzeigen
