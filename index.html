@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1170, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -16,7 +16,8 @@
         }
 
         body {
-            display: block; /* Standardverhalten für body */
+            display: block;
+            transform-origin: top left; /* Skalierung von der oberen linken Ecke */
         }
 
         .header-field {
@@ -77,6 +78,15 @@
     <div class="inventory-field"></div>
 
     <script>
+        // JavaScript, um die Seite beim Laden zu skalieren, damit sie vollständig sichtbar ist
+        window.addEventListener('load', () => {
+            const viewportWidth = window.innerWidth;
+            const pageWidth = 1170; // Feste Breite der Seite
+            const scale = viewportWidth / pageWidth; // Skalierung basierend auf der Viewport-Breite
+            document.body.style.transform = `scale(${scale})`; // Skalierung anwenden
+            document.body.style.width = `${pageWidth / scale}px`; // Breite anpassen, um Scrollen zu vermeiden
+        });
+
         console.log("Space Pirates initialized");
     </script>
 </body>
