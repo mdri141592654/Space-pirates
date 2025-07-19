@@ -79,7 +79,12 @@
         }
 
         .inventory-field.expanded {
-            height: 500px; /* Vergrößerte Höhe */
+            height: 500px; /* Vergrößerte Höhe für Schiff */
+            opacity: 0.75; /* 75% opak, 25% transparent */
+        }
+
+        .inventory-field.radar-expanded {
+            height: 600px; /* Vergrößerte Höhe für Radar */
             opacity: 0.75; /* 75% opak, 25% transparent */
         }
 
@@ -100,7 +105,12 @@
         }
 
         .inventory-text.expanded {
-            height: 468px; /* 500px - 16px oben - 16px unten */
+            height: 468px; /* 500px - 16px oben - 16px unten für Schiff */
+            align-items: flex-start; /* Links-bündig für neue Liste */
+        }
+
+        .inventory-text.radar-expanded {
+            height: 568px; /* 600px - 16px oben - 16px unten für Radar */
             align-items: flex-start; /* Links-bündig für neue Liste */
         }
 
@@ -110,7 +120,8 @@
             width: 100%;
         }
 
-        .inventory-text.expanded .row {
+        .inventory-text.expanded .row,
+        .inventory-text.radar-expanded .row {
             justify-content: flex-start; /* Links-bündig für einspaltige Liste */
         }
 
@@ -167,6 +178,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
         }
 
         .radar-text {
@@ -289,6 +301,32 @@
             viewportMeta.setAttribute('content', `width=1170, initial-scale=${scale}`);
         };
 
+        // Funktion zum Zurücksetzen ins Hauptmenü
+        function resetToMainMenu() {
+            document.body.style.backgroundImage = "url('background.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('expanded', 'radar-expanded');
+            inventoryText.classList.remove('expanded', 'radar-expanded');
+            inventoryText.innerHTML = `
+                <div class="row">
+                    <span>Schiff: 100%</span>
+                    <span>1000 :Credits</span>
+                </div>
+                <div class="row">
+                    <span>Kleinraumschiff 0/10</span>
+                    <span>21.05.4025</span>
+                </div>
+                <div class="row">
+                    <span>Ort: Nexaris Sektor / Orbit / Zorak</span>
+                </div>
+            `;
+            document.querySelector('.ship-field').style.display = 'flex';
+            document.querySelector('.radar-field').style.display = 'flex';
+            document.querySelector('.land-field').style.display = 'flex';
+            document.querySelector('.back-field').style.display = 'none';
+        }
+
         // Klick-Event für ship-field
         document.querySelector('.ship-field').addEventListener('click', function() {
             // Hintergrundbild ändern
@@ -319,38 +357,37 @@
             document.querySelector('.back-field').style.display = 'flex';
         });
 
-        // Klick-Event für back-field (um Änderungen rückgängig zu machen)
-        document.querySelector('.back-field').addEventListener('click', function() {
-            // Hintergrundbild zurücksetzen
-            document.body.style.backgroundImage = "url('background.jpg')";
+        // Klick-Event für radar-field
+        document.querySelector('.radar-field').addEventListener('click', function() {
+            // Hintergrundbild ändern
+            document.body.style.backgroundImage = "url('pilot.jpg')";
 
-            // inventory-field und Text zurücksetzen
+            // inventory-field vergrößern und Text ersetzen
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('expanded');
-            inventoryText.classList.remove('expanded');
+            inventoryField.classList.add('radar-expanded');
+            inventoryText.classList.add('radar-expanded');
             inventoryText.innerHTML = `
-                <div class="row">
-                    <span>Schiff: 100%</span>
-                    <span>1000 :Credits</span>
-                </div>
-                <div class="row">
-                    <span>Kleinraumschiff 0/10</span>
-                    <span>21.05.4025</span>
-                </div>
-                <div class="row">
-                    <span>Ort: Nexaris Sektor / Orbit / Zorak</span>
-                </div>
+                <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
+                <div class="row"><span>Kryton</span></div>
+                <div class="row"><span>Aurelia</span></div>
+                <div class="row"><span>Dravon-4</span></div>
+                <div class="row"><span>Elystra</span></div>
+                <div class="row"><span>Nexaris outpost</span></div>
+                <div class="row"><span>Nexaris Sektor verlassen</span></div>
             `;
 
-            // ship-field, radar-field, land-field einblenden
-            document.querySelector('.ship-field').style.display = 'flex';
-            document.querySelector('.radar-field').style.display = 'flex';
-            document.querySelector('.land-field').style.display = 'flex';
+            // ship-field, radar-field, land-field ausblenden
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
 
-            // back-field ausblenden
-            document.querySelector('.back-field').style.display = 'none';
+            // back-field einblenden
+            document.querySelector('.back-field').style.display = 'flex';
         });
+
+        // Klick-Event für back-field (um Änderungen rückgängig zu machen)
+        document.querySelector('.back-field').addEventListener('click', resetToMainMenu);
     </script>
 </body>
 </html>
