@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1170, initial-scale=0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport" id="viewport" content="width=1170, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -17,7 +17,12 @@
             background-position: top left; /* Oben links */
             background-repeat: no-repeat; /* Keine Wiederholung */
             overflow: auto; /* Scrollen erlauben */
+            overflow-x: hidden; /* Horizontales Überlaufen verhindern */
             touch-action: none; /* Pinch-Zoom unterbinden */
+        }
+
+        html {
+            zoom: calc(100vw / 1170px); /* Fallback-Skalierung basierend auf Viewport-Breite */
         }
 
         .header-field {
@@ -223,6 +228,15 @@
 
     <script>
         console.log("Space Pirates initialized");
+
+        // Dynamische Skalierung des Viewports basierend auf Gerätebreite
+        window.onload = function() {
+            const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            const pageWidth = 1170; // Feste Breite der Seite
+            const scale = viewportWidth / pageWidth; // Skalierungsfaktor
+            const viewportMeta = document.getElementById('viewport');
+            viewportMeta.setAttribute('content', `width=1170, initial-scale=${scale}, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no`);
+        };
     </script>
 </body>
 </html>
