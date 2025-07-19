@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1170, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=1170, initial-scale=0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -223,17 +223,6 @@
 
     <script>
         console.log("Space Pirates initialized");
-
-        // Dynamische Skalierung, um die volle Breite beim Laden anzuzeigen
-        window.onload = function() {
-            const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-            const pageWidth = 1170; // Feste Breite der Seite
-            const scale = viewportWidth / pageWidth; // Skalierung basierend auf Gerätebreite
-            document.body.style.transform = `scale(${scale})`;
-            document.body.style.transformOrigin = 'top left'; // Skalierung von der oberen linken Ecke
-            document.body.style.width = `${pageWidth}px`; // Beibehaltung der festen Breite
-            document.body.style.height = `${1985}px`; // Beibehaltung der festen Höhe
-        };
     </script>
 </body>
 </html>
