@@ -80,12 +80,21 @@
             font-weight: 700;
             font-size: 45px;
             color: #4ac9c0;
-            text-align: center;
-            line-height: 1.2; /* Für angemessenen Zeilenabstand */
-            white-space: pre; /* Behält Leerzeichen und Zeilenumbrüche bei */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            line-height: 1.2; /* Angemessener Zeilenabstand */
+        }
+
+        .inventory-text .row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .inventory-text .row.single {
+            justify-content: center; /* Für die letzte Zeile (Fracht: Leer) */
         }
     </style>
 </head>
@@ -94,9 +103,19 @@
         <div class="header-text">Space Pirates</div>
     </div>
     <div class="inventory-field">
-        <div class="inventory-text">|   Schiff: 100%                      1000 :Credits  |
-|   Kleinraumschiff 0/10            21.05.4025  |
-|   Fracht: Leer                                                 |</div>
+        <div class="inventory-text">
+            <div class="row">
+                <span>Schiff: 100%</span>
+                <span>1000 :Credits</span>
+            </div>
+            <div class="row">
+                <span>Kleinraumschiff 0/10</span>
+                <span>21.05.4025</span>
+            </div>
+            <div class="row single">
+                <span>Fracht: Leer</span>
+            </div>
+        </div>
     </div>
 
     <script>
