@@ -33,7 +33,7 @@
                 100% 30px,        /* Oben rechts Abschrägung */
                 100% 100%,        /* Unten rechts (rechtwinklig) */
                 0 100%,           /* Unten links (rechtwinklig) */
-                0 30px            /* Oben links Abschrägung */
+                0 30px            /* Oben links Abs invadingchrägung */
             );
             display: flex;
             justify-content: center;
@@ -80,6 +80,8 @@
             font-weight: 700;
             font-size: 45px;
             color: #4ac9c0;
+            -webkit-text-stroke: 1px #000000; /* 1px Rand um die Schrift */
+            text-stroke: 1px #000000; /* Fallback für Textumriss */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -91,10 +93,6 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-        }
-
-        .inventory-text .row.single {
-            justify-content: center; /* Für die letzte Zeile (Fracht: Leer) */
         }
     </style>
 </head>
@@ -112,7 +110,7 @@
                 <span>Kleinraumschiff 0/10</span>
                 <span>21.05.4025</span>
             </div>
-            <div class="row single">
+            <div class="row">
                 <span>Fracht: Leer</span>
             </div>
         </div>
