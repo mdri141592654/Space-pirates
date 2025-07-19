@@ -112,6 +112,44 @@
                 0 30px            /* Oben links Abschrägung */
             );
         }
+
+        .radar-field {
+            position: absolute;
+            top: 1561px;
+            left: 70px;
+            width: 1030px;
+            height: 160px;
+            background-color: #005265;
+            clip-path: polygon(
+                30px 0,           /* Oben links abgeschrägt */
+                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
+                100% 30px,        /* Oben rechts Abschrägung */
+                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
+                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
+                30px 100%,        /* Unten links Abschrägung */
+                0 calc(100% - 30px), /* Unten links abgeschrägt */
+                0 30px            /* Oben links Abschrägung */
+            );
+        }
+
+        .land-field {
+            position: absolute;
+            top: 1769px;
+            left: 70px;
+            width: 1030px;
+            height: 160px;
+            background-color: #c14d08;
+            clip-path: polygon(
+                30px 0,           /* Oben links abgeschrägt */
+                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
+                100% 30px,        /* Oben rechts Abschrägung */
+                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
+                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
+                30px 100%,        /* Unten links Abschrägung */
+                0 calc(100% - 30px), /* Unten links abgeschrägt */
+                0 30px            /* Oben links Abschrägung */
+            );
+        }
     </style>
 </head>
 <body>
@@ -134,6 +172,8 @@
         </div>
     </div>
     <div class="travel-field"></div>
+    <div class="radar-field"></div>
+    <div class="land-field"></div>
 
     <script>
         console.log("Space Pirates initialized");
