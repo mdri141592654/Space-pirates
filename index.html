@@ -68,6 +68,24 @@
                 30px 100%,        /* Unten links Abschrägung */
                 0 calc(100% - 30px)     /* Unten links abgeschrägt */
             );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inventory-text {
+            width: 990px; /* 1030px - 20px links - 20px rechts */
+            height: 168px; /* 200px - 16px oben - 16px unten */
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 45px;
+            color: #4ac9c0;
+            text-align: center;
+            line-height: 1.2; /* Für angemessenen Zeilenabstand */
+            white-space: pre; /* Behält Leerzeichen und Zeilenumbrüche bei */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -75,7 +93,11 @@
     <div class="header-field">
         <div class="header-text">Space Pirates</div>
     </div>
-    <div class="inventory-field"></div>
+    <div class="inventory-field">
+        <div class="inventory-text">|   Schiff: 100%                      1000 :Credits  |
+|   Kleinraumschiff 0/10            21.05.4025  |
+|   Fracht: Leer                                                 |</div>
+    </div>
 
     <script>
         // JavaScript, um die Seite beim Laden zu skalieren, damit sie vollständig sichtbar ist
