@@ -12,7 +12,7 @@
             width: 1170px; /* Feste Breite */
             height: 1985px; /* Feste Höhe */
             background-color: #000000; /* Schwarzer Hintergrund für unteren Bereich */
-            background-image: url('background.jpg'); /* Hintergrundbild */
+            background-image: url('background.jpg'); /* Initiales Hintergrundbild */
             background-size: 1170px auto; /* Breite 1170px, Höhe proportional */
             background-position: top left; /* Oben links */
             background-repeat: no-repeat; /* Keine Wiederholung */
@@ -62,7 +62,7 @@
             top: 232px;
             left: 70px;
             width: 1030px;
-            height: 200px;
+            height: 200px; /* Initiale Höhe */
             background-color: #001f2f;
             clip-path: polygon(
                 0 0,              /* Oben links (rechtwinklig) */
@@ -75,11 +75,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: height 0.3s ease; /* Sanfte Höhenänderung */
+        }
+
+        .inventory-field.expanded {
+            height: 500px; /* Vergrößerte Höhe */
         }
 
         .inventory-text {
             width: 990px; /* 1030px - 20px links - 20px rechts */
-            height: 168px; /* 200px - 16px oben - 16px unten */
+            height: 168px; /* Initiale Höhe */
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 45px;
@@ -93,10 +98,19 @@
             line-height: 1.2; /* Angemessener Zeilenabstand */
         }
 
+        .inventory-text.expanded {
+            height: 468px; /* 500px - 16px oben - 16px unten */
+            align-items: flex-start; /* Links-bündig für neue Liste */
+        }
+
         .inventory-text .row {
             display: flex;
             justify-content: space-between;
             width: 100%;
+        }
+
+        .inventory-text.expanded .row {
+            justify-content: flex-start; /* Links-bündig für einspaltige Liste */
         }
 
         .ship-field {
@@ -119,6 +133,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
         }
 
         .ship-text {
@@ -194,6 +209,39 @@
             text-stroke: 2px #000000;
             text-align: center;
         }
+
+        .back-field {
+            position: absolute;
+            top: 1769px;
+            left: 70px;
+            width: 1030px;
+            height: 160px;
+            background-color: #c14d08;
+            clip-path: polygon(
+                30px 0,           /* Oben links abgeschrägt */
+                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
+                100% 30px,        /* Oben rechts Abschrägung */
+                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
+                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
+                30px 100%,        /* Unten links Abschrägung */
+                0 calc(100% - 30px), /* Unten links abgeschrägt */
+                0 30px            /* Oben links Abschrägung */
+            );
+            display: none; /* Initial unsichtbar */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
+        }
+
+        .back-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 77px;
+            color: #fece40;
+            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            text-stroke: 2px #000000;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -224,6 +272,9 @@
     <div class="land-field">
         <div class="land-text">LANDEN</div>
     </div>
+    <div class="back-field">
+        <div class="back-text">ZURÜCK</div>
+    </div>
 
     <script>
         console.log("Space Pirates initialized");
@@ -236,6 +287,69 @@
             const viewportMeta = document.getElementById('viewport');
             viewportMeta.setAttribute('content', `width=1170, initial-scale=${scale}`);
         };
+
+        // Klick-Event für ship-field
+        document.querySelector('.ship-field').addEventListener('click', function() {
+            // Hintergrundbild ändern
+            document.body.style.backgroundImage = "url('lager.jpg')";
+
+            // inventory-field vergrößern und Text ersetzen
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.add('expanded');
+            inventoryText.classList.add('expanded');
+            inventoryText.innerHTML = `
+                <div class="row"><span>Frachtraum 0/10</span></div>
+                <div class="row"><span>Treibstoff: 0</span></div>
+                <div class="row"><span>Lebensmittel: 0</span></div>
+                <div class="row"><span>Waffen: 0</span></div>
+                <div class="row"><span>Drogen: 0</span></div>
+                <div class="row"><span>Kunstwerke: 0</span></div>
+                <div class="row"><span>Rohstoffe: 0</span></div>
+                <div class="row"><span>Technikkomponenten: 0</span></div>
+            `;
+
+            // ship-field, radar-field, land-field ausblenden
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+
+            // back-field einblenden
+            document.querySelector('.back-field').style.display = 'flex';
+        });
+
+        // Klick-Event für back-field (um Änderungen rückgängig zu machen)
+        document.querySelector('.back-field').addEventListener('click', function() {
+            // Hintergrundbild zurücksetzen
+            document.body.style.backgroundImage = "url('background.jpg')";
+
+            // inventory-field und Text zurücksetzen
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('expanded');
+            inventoryText.classList.remove('expanded');
+            inventoryText.innerHTML = `
+                <div class="row">
+                    <span>Schiff: 100%</span>
+                    <span>1000 :Credits</span>
+                </div>
+                <div class="row">
+                    <span>Kleinraumschiff 0/10</span>
+                    <span>21.05.4025</span>
+                </div>
+                <div class="row">
+                    <span>Ort: Nexaris Sektor / Orbit / Zorak</span>
+                </div>
+            `;
+
+            // ship-field, radar-field, land-field einblenden
+            document.querySelector('.ship-field').style.display = 'flex';
+            document.querySelector('.radar-field').style.display = 'flex';
+            document.querySelector('.land-field').style.display = 'flex';
+
+            // back-field ausblenden
+            document.querySelector('.back-field').style.display = 'none';
+        });
     </script>
 </body>
 </html>
