@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1170, initial-scale=1.0">
     <title>Space Pirates</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
         html, body {
             margin: 0;
@@ -111,6 +111,19 @@
                 0 calc(100% - 30px), /* Unten links abgeschrägt */
                 0 30px            /* Oben links Abschrägung */
             );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .travel-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 77px;
+            color: #9dbd38;
+            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            text-stroke: 2px #000000;
+            text-align: center;
         }
 
         .radar-field {
@@ -130,6 +143,19 @@
                 0 calc(100% - 30px), /* Unten links abgeschrägt */
                 0 30px            /* Oben links Abschrägung */
             );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .radar-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 77px;
+            color: #46aeab;
+            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            text-stroke: 2px #000000;
+            text-align: center;
         }
 
         .land-field {
@@ -149,6 +175,19 @@
                 0 calc(100% - 30px), /* Unten links abgeschrägt */
                 0 30px            /* Oben links Abschrägung */
             );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .land-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 77px;
+            color: #fece40;
+            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            text-stroke: 2px #000000;
+            text-align: center;
         }
     </style>
 </head>
@@ -171,9 +210,15 @@
             </div>
         </div>
     </div>
-    <div class="travel-field"></div>
-    <div class="radar-field"></div>
-    <div class="land-field"></div>
+    <div class="travel-field">
+        <div class="travel-text">REISEN</div>
+    </div>
+    <div class="radar-field">
+        <div class="radar-text">RADAR</div>
+    </div>
+    <div class="land-field">
+        <div class="land-text">LANDEN</div>
+    </div>
 
     <script>
         console.log("Space Pirates initialized");
