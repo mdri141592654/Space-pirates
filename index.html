@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1170, initial-scale=1.0">
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -11,13 +11,12 @@
             padding: 0;
             width: 1170px; /* Feste Breite */
             height: 1985px; /* Feste Höhe */
-            background-color: #000000;
-            overflow: auto; /* Scrollen erlauben, falls nötig */
-        }
-
-        body {
-            display: block;
-            transform-origin: top left; /* Skalierung von der oberen linken Ecke */
+            background-color: #000000; /* Schwarzer Hintergrund für unteren Bereich */
+            background-image: url('background.jpg'); /* Hintergrundbild */
+            background-size: 1170px auto; /* Breite 1170px, Höhe proportional */
+            background-position: top left; /* Oben links */
+            background-repeat: no-repeat; /* Keine Wiederholung */
+            overflow: auto; /* Scrollen erlauben */
         }
 
         .header-field {
@@ -33,7 +32,7 @@
                 100% 30px,        /* Oben rechts Abschrägung */
                 100% 100%,        /* Unten rechts (rechtwinklig) */
                 0 100%,           /* Unten links (rechtwinklig) */
-                0 30px            /* Oben links Abs invadingchrägung */
+                0 30px            /* Oben links Abschrägung */
             );
             display: flex;
             justify-content: center;
@@ -81,7 +80,7 @@
             font-size: 45px;
             color: #4ac9c0;
             -webkit-text-stroke: 1px #000000; /* 1px Rand um die Schrift */
-            text-stroke: 1px #000000; /* Fallback für Textumriss */
+            text-stroke: 1px #000000;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -117,15 +116,6 @@
     </div>
 
     <script>
-        // JavaScript, um die Seite beim Laden zu skalieren, damit sie vollständig sichtbar ist
-        window.addEventListener('load', () => {
-            const viewportWidth = window.innerWidth;
-            const pageWidth = 1170; // Feste Breite der Seite
-            const scale = viewportWidth / pageWidth; // Skalierung basierend auf der Viewport-Breite
-            document.body.style.transform = `scale(${scale})`; // Skalierung anwenden
-            document.body.style.width = `${pageWidth / scale}px`; // Breite anpassen, um Scrollen zu vermeiden
-        });
-
         console.log("Space Pirates initialized");
     </script>
 </body>
