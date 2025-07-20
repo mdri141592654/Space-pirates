@@ -78,12 +78,9 @@
             transition: height 0.3s ease; /* Sanfte Höhenänderung */
         }
 
-        .inventory-field.ship-expanded {
-            height: auto; /* Dynamische Höhe */
-            opacity: 0.75; /* 75% opak, 25% transparent */
-        }
-
-        .inventory-field.radar-expanded {
+        .inventory-field.ship-expanded,
+        .inventory-field.radar-expanded,
+        .inventory-field.market-expanded {
             height: auto; /* Dynamische Höhe */
             opacity: 0.75; /* 75% opak, 25% transparent */
         }
@@ -104,13 +101,9 @@
             line-height: 1.2; /* Zeilenhöhe ≈ 54px */
         }
 
-        .inventory-text.ship-expanded {
-            height: auto; /* Dynamische Höhe */
-            padding: 48px 20px; /* 48px oben/unten, 20px links/rechts */
-            align-items: flex-start; /* Links-bündig für neue Liste */
-        }
-
-        .inventory-text.radar-expanded {
+        .inventory-text.ship-expanded,
+        .inventory-text.radar-expanded,
+        .inventory-text.market-expanded {
             height: auto; /* Dynamische Höhe */
             padding: 48px 20px; /* 48px oben/unten, 20px links/rechts */
             align-items: flex-start; /* Links-bündig für neue Liste */
@@ -123,7 +116,8 @@
         }
 
         .inventory-text.ship-expanded .row,
-        .inventory-text.radar-expanded .row {
+        .inventory-text.radar-expanded .row,
+        .inventory-text.market-expanded .row {
             justify-content: flex-start; /* Links-bündig für einspaltige Liste */
         }
 
@@ -217,6 +211,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
         }
 
         .land-text {
@@ -292,7 +287,7 @@
         <div class="land-text">LANDEN</div>
     </div>
     <div class="back-field">
-        <div class="back-text">ZURÜCK</div>
+        <div class="back-text"></div> <!-- Text wird dynamisch gesetzt -->
     </div>
 
     <script>
@@ -312,8 +307,8 @@
             document.body.style.backgroundImage = "url('background.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded');
             inventoryText.innerHTML = `
                 <div class="row">
                     <span>Schiff: 100%</span>
@@ -331,14 +326,12 @@
             document.querySelector('.radar-field').style.display = 'flex';
             document.querySelector('.land-field').style.display = 'flex';
             document.querySelector('.back-field').style.display = 'none';
+            document.querySelector('.back-text').textContent = ''; // Text zurücksetzen
         }
 
         // Klick-Event für ship-field
         document.querySelector('.ship-field').addEventListener('click', function() {
-            // Hintergrundbild ändern
             document.body.style.backgroundImage = "url('lager.jpg')";
-
-            // inventory-field vergrößern und Text ersetzen
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
             inventoryField.classList.add('ship-expanded');
@@ -354,22 +347,16 @@
                 <div class="row"><span>Rohstoffe: 0</span></div>
                 <div class="row"><span>Technikkomponenten: 0</span></div>
             `;
-
-            // ship-field, radar-field, land-field ausblenden
             document.querySelector('.ship-field').style.display = 'none';
             document.querySelector('.radar-field').style.display = 'none';
             document.querySelector('.land-field').style.display = 'none';
-
-            // back-field einblenden
             document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'ZURÜCK';
         });
 
         // Klick-Event für radar-field
         document.querySelector('.radar-field').addEventListener('click', function() {
-            // Hintergrundbild ändern
             document.body.style.backgroundImage = "url('pilot.jpg')";
-
-            // inventory-field vergrößern und Text ersetzen
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
             inventoryField.classList.add('radar-expanded');
@@ -384,17 +371,35 @@
                 <div class="row"><span>Nexaris outpost</span></div>
                 <div class="row"><span>Nexaris Sektor verlassen</span></div>
             `;
-
-            // ship-field, radar-field, land-field ausblenden
             document.querySelector('.ship-field').style.display = 'none';
             document.querySelector('.radar-field').style.display = 'none';
             document.querySelector('.land-field').style.display = 'none';
-
-            // back-field einblenden
             document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'ZURÜCK';
         });
 
-        // Klick-Event für back-field (um Änderungen rückgängig zu machen)
+        // Klick-Event für land-field
+        document.querySelector('.land-field').addEventListener('click', function() {
+            document.body.style.backgroundImage = "url('market.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.add('market-expanded');
+            inventoryText.classList.add('market-expanded');
+            inventoryText.innerHTML = `
+                <div class="row"><span>Marktplatz auf Zorak</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span>Treibstoff: 20 Credits</span></div>
+                <div class="row"><span>Lebensmittel: 35 Credits</span></div>
+                <div class="row"><span>Rohstoffe: 17 Credits</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'STARTEN';
+        });
+
+        // Klick-Event für back-field
         document.querySelector('.back-field').addEventListener('click', resetToMainMenu);
     </script>
 </body>
