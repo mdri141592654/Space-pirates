@@ -6,22 +6,23 @@
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
+        /* Unverändert wie im vorherigen Code */
         html, body {
             margin: 0;
             padding: 0;
-            width: 1170px; /* Feste Breite */
-            height: 1985px; /* Feste Höhe */
-            background-color: #000000; /* Schwarzer Hintergrund für unteren Bereich */
-            background-image: url('background.jpg'); /* Initiales Hintergrundbild */
-            background-size: 1170px auto; /* Breite 1170px, Höhe proportional */
-            background-position: top left; /* Oben links */
-            background-repeat: no-repeat; /* Keine Wiederholung */
-            overflow: auto; /* Scrollen erlauben */
-            overflow-x: hidden; /* Horizontales Überlaufen verhindern */
+            width: 1170px;
+            height: 1985px;
+            background-color: #000000;
+            background-image: url('background.jpg');
+            background-size: 1170px auto;
+            background-position: top left;
+            background-repeat: no-repeat;
+            overflow: auto;
+            overflow-x: hidden;
         }
 
         html {
-            zoom: calc(100vw / 1170px); /* Fallback-Skalierung basierend auf Viewport-Breite */
+            zoom: calc(100vw / 1170px);
         }
 
         .header-field {
@@ -32,12 +33,12 @@
             height: 175px;
             background-color: #003f2c;
             clip-path: polygon(
-                30px 0,           /* Oben links abgeschrägt */
-                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
-                100% 30px,        /* Oben rechts Abschrägung */
-                100% 100%,        /* Unten rechts (rechtwinklig) */
-                0 100%,           /* Unten links (rechtwinklig) */
-                0 30px            /* Oben links Abschrägung */
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% 100%,
+                0 100%,
+                0 30px
             );
             display: flex;
             justify-content: center;
@@ -62,51 +63,51 @@
             top: 232px;
             left: 70px;
             width: 1030px;
-            height: 200px; /* Initiale Höhe */
+            height: 200px;
             background-color: #001f2f;
             clip-path: polygon(
-                0 0,              /* Oben links (rechtwinklig) */
-                100% 0,           /* Oben rechts (rechtwinklig) */
-                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
-                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
-                30px 100%,        /* Unten links Abschrägung */
-                0 calc(100% - 30px)     /* Unten links abgeschrägt */
+                0 0,
+                100% 0,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px)
             );
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: height 0.3s ease; /* Sanfte Höhenänderung */
+            transition: height 0.3s ease;
         }
 
         .inventory-field.ship-expanded,
         .inventory-field.radar-expanded,
         .inventory-field.market-expanded {
-            height: auto; /* Dynamische Höhe */
-            opacity: 0.75; /* 75% opak, 25% transparent */
+            height: auto;
+            opacity: 0.75;
         }
 
         .inventory-text {
-            width: 990px; /* 1030px - 20px links - 20px rechts */
-            height: 168px; /* Initiale Höhe */
+            width: 990px;
+            height: 168px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 45px;
             color: #4ac9c0;
-            -webkit-text-stroke: 1px #000000; /* 1px Rand um die Schrift */
+            -webkit-text-stroke: 1px #000000;
             text-stroke: 1px #000000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            line-height: 1.2; /* Zeilenhöhe ≈ 54px */
+            line-height: 1.2;
         }
 
         .inventory-text.ship-expanded,
         .inventory-text.radar-expanded,
         .inventory-text.market-expanded {
-            height: auto; /* Dynamische Höhe */
-            padding: 48px 20px; /* 48px oben/unten, 20px links/rechts */
-            align-items: flex-start; /* Links-bündig für neue Liste */
+            height: auto;
+            padding: 48px 20px;
+            align-items: flex-start;
         }
 
         .inventory-text .row {
@@ -118,11 +119,11 @@
         .inventory-text.ship-expanded .row,
         .inventory-text.radar-expanded .row,
         .inventory-text.market-expanded .row {
-            justify-content: flex-start; /* Links-bündig für einspaltige Liste */
+            justify-content: flex-start;
         }
 
         .inventory-text .row.empty {
-            height: 54px; /* Freie Zeile, passend zu line-height: 1.2 */
+            height: 54px;
         }
 
         .ship-field {
@@ -133,19 +134,19 @@
             height: 160px;
             background-color: #064b2a;
             clip-path: polygon(
-                30px 0,           /* Oben links abgeschrägt */
-                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
-                100% 30px,        /* Oben rechts Abschrägung */
-                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
-                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
-                30px 100%,        /* Unten links Abschrägung */
-                0 calc(100% - 30px), /* Unten links abgeschrägt */
-                0 30px            /* Oben links Abschrägung */
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px),
+                0 30px
             );
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
+            cursor: pointer;
         }
 
         .ship-text {
@@ -153,7 +154,7 @@
             font-weight: 900;
             font-size: 77px;
             color: #9dbd38;
-            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            -webkit-text-stroke: 2px #000000;
             text-stroke: 2px #000000;
             text-align: center;
         }
@@ -166,19 +167,19 @@
             height: 160px;
             background-color: #005265;
             clip-path: polygon(
-                30px 0,           /* Oben links abgeschrägt */
-                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
-                100% 30px,        /* Oben rechts Abschrägung */
-                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
-                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
-                30px 100%,        /* Unten links Abschrägung */
-                0 calc(100% - 30px), /* Unten links abgeschrägt */
-                0 30px            /* Oben links Abschrägung */
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px),
+                0 30px
             );
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
+            cursor: pointer;
         }
 
         .radar-text {
@@ -186,7 +187,7 @@
             font-weight: 900;
             font-size: 77px;
             color: #46aeab;
-            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            -webkit-text-stroke: 2px #000000;
             text-stroke: 2px #000000;
             text-align: center;
         }
@@ -199,19 +200,19 @@
             height: 160px;
             background-color: #c14d08;
             clip-path: polygon(
-                30px 0,           /* Oben links abgeschrägt */
-                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
-                100% 30px,        /* Oben rechts Abschrägung */
-                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
-                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
-                30px 100%,        /* Unten links Abschrägung */
-                0 calc(100% - 30px), /* Unten links abgeschrägt */
-                0 30px            /* Oben links Abschrägung */
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px),
+                0 30px
             );
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
+            cursor: pointer;
         }
 
         .land-text {
@@ -219,7 +220,7 @@
             font-weight: 900;
             font-size: 77px;
             color: #fece40;
-            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            -webkit-text-stroke: 2px #000000;
             text-stroke: 2px #000000;
             text-align: center;
         }
@@ -232,19 +233,19 @@
             height: 160px;
             background-color: #c14d08;
             clip-path: polygon(
-                30px 0,           /* Oben links abgeschrägt */
-                calc(100% - 30px) 0, /* Oben rechts abgeschrägt */
-                100% 30px,        /* Oben rechts Abschrägung */
-                100% calc(100% - 30px), /* Unten rechts abgeschrägt */
-                calc(100% - 30px) 100%, /* Unten rechts Abschrägung */
-                30px 100%,        /* Unten links Abschrägung */
-                0 calc(100% - 30px), /* Unten links abgeschrägt */
-                0 30px            /* Oben links Abschrägung */
+                30px 0,
+                calc(100% - 30px) 0,
+                100% 30px,
+                100% calc(100% - 30px),
+                calc(100% - 30px) 100%,
+                30px 100%,
+                0 calc(100% - 30px),
+                0 30px
             );
-            display: none; /* Initial unsichtbar */
+            display: none;
             justify-content: center;
             align-items: center;
-            cursor: pointer; /* Zeigt an, dass das Feld klickbar ist */
+            cursor: pointer;
         }
 
         .back-text {
@@ -252,7 +253,7 @@
             font-weight: 900;
             font-size: 77px;
             color: #fece40;
-            -webkit-text-stroke: 2px #000000; /* 2px Rand um die Schrift */
+            -webkit-text-stroke: 2px #000000;
             text-stroke: 2px #000000;
             text-align: center;
         }
@@ -287,7 +288,7 @@
         <div class="land-text">LANDEN</div>
     </div>
     <div class="back-field">
-        <div class="back-text"></div> <!-- Text wird dynamisch gesetzt -->
+        <div class="back-text"></div>
     </div>
 
     <script>
@@ -296,8 +297,8 @@
         // Dynamische Skalierung des Viewports basierend auf Gerätebreite
         window.onload = function() {
             const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-            const pageWidth = 1170; // Feste Breite der Seite
-            const scale = viewportWidth / pageWidth; // Skalierungsfaktor
+            const pageWidth = 1170;
+            const scale = viewportWidth / pageWidth;
             const viewportMeta = document.getElementById('viewport');
             viewportMeta.setAttribute('content', `width=1170, initial-scale=${scale}`);
         };
@@ -326,7 +327,7 @@
             document.querySelector('.radar-field').style.display = 'flex';
             document.querySelector('.land-field').style.display = 'flex';
             document.querySelector('.back-field').style.display = 'none';
-            document.querySelector('.back-text').textContent = ''; // Text zurücksetzen
+            document.querySelector('.back-text').textContent = '';
         }
 
         // Klick-Event für ship-field
@@ -380,7 +381,7 @@
 
         // Klick-Event für land-field
         document.querySelector('.land-field').addEventListener('click', function() {
-            document.body.style.backgroundImage = "url('market.jpg')";
+            document.body.style.backgroundImage = "url('market-zorak.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
             inventoryField.classList.add('market-expanded');
