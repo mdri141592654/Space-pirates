@@ -127,6 +127,10 @@
             justify-content: flex-start; /* Links-bündig für einspaltige Liste */
         }
 
+        .inventory-text .row.empty {
+            height: 54px; /* Freie Zeile, passend zu line-height: 1.2 */
+        }
+
         .ship-field {
             position: absolute;
             top: 1353px;
@@ -341,6 +345,7 @@
             inventoryText.classList.add('ship-expanded');
             inventoryText.innerHTML = `
                 <div class="row"><span>Frachtraum 0/10</span></div>
+                <div class="row empty"></div>
                 <div class="row"><span>Treibstoff: 0</span></div>
                 <div class="row"><span>Lebensmittel: 0</span></div>
                 <div class="row"><span>Waffen: 0</span></div>
@@ -371,6 +376,7 @@
             inventoryText.classList.add('radar-expanded');
             inventoryText.innerHTML = `
                 <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
+                <div class="row empty"></div>
                 <div class="row"><span>Kryton</span></div>
                 <div class="row"><span>Aurelia</span></div>
                 <div class="row"><span>Dravon-4</span></div>
