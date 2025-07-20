@@ -78,13 +78,13 @@
             transition: height 0.3s ease; /* Sanfte Höhenänderung */
         }
 
-        .inventory-field.expanded {
-            height: 500px; /* Vergrößerte Höhe für Schiff */
+        .inventory-field.ship-expanded {
+            height: auto; /* Dynamische Höhe */
             opacity: 0.75; /* 75% opak, 25% transparent */
         }
 
         .inventory-field.radar-expanded {
-            height: 600px; /* Vergrößerte Höhe für Radar */
+            height: auto; /* Dynamische Höhe */
             opacity: 0.75; /* 75% opak, 25% transparent */
         }
 
@@ -101,16 +101,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            line-height: 1.2; /* Angemessener Zeilenabstand */
+            line-height: 1.2; /* Zeilenhöhe ≈ 54px */
         }
 
-        .inventory-text.expanded {
-            height: 468px; /* 500px - 16px oben - 16px unten für Schiff */
+        .inventory-text.ship-expanded {
+            height: auto; /* Dynamische Höhe */
+            padding: 48px 20px; /* 48px oben/unten, 20px links/rechts */
             align-items: flex-start; /* Links-bündig für neue Liste */
         }
 
         .inventory-text.radar-expanded {
-            height: 568px; /* 600px - 16px oben - 16px unten für Radar */
+            height: auto; /* Dynamische Höhe */
+            padding: 48px 20px; /* 48px oben/unten, 20px links/rechts */
             align-items: flex-start; /* Links-bündig für neue Liste */
         }
 
@@ -120,7 +122,7 @@
             width: 100%;
         }
 
-        .inventory-text.expanded .row,
+        .inventory-text.ship-expanded .row,
         .inventory-text.radar-expanded .row {
             justify-content: flex-start; /* Links-bündig für einspaltige Liste */
         }
@@ -306,8 +308,8 @@
             document.body.style.backgroundImage = "url('background.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('expanded', 'radar-expanded');
-            inventoryText.classList.remove('expanded', 'radar-expanded');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded');
             inventoryText.innerHTML = `
                 <div class="row">
                     <span>Schiff: 100%</span>
@@ -335,8 +337,8 @@
             // inventory-field vergrößern und Text ersetzen
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.add('expanded');
-            inventoryText.classList.add('expanded');
+            inventoryField.classList.add('ship-expanded');
+            inventoryText.classList.add('ship-expanded');
             inventoryText.innerHTML = `
                 <div class="row"><span>Frachtraum 0/10</span></div>
                 <div class="row"><span>Treibstoff: 0</span></div>
