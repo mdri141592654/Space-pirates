@@ -133,6 +133,7 @@
             justify-content: space-between;
             width: 100%;
             margin: 0;
+            min-height: 96px; /* Sicherstellt, dass die Button-Höhe berücksichtigt wird */
         }
 
         .inventory-text.ship-expanded .row,
@@ -329,7 +330,7 @@
             text-stroke: 2px #000000;
             border: none;
             cursor: pointer;
-            margin-right: 20px; /* Abstand zum Verkaufen-Button */
+            margin-right: 20px;
         }
 
         .buy-button.disabled {
@@ -347,12 +348,12 @@
             background-color: #d15609;
             clip-path: polygon(
                 0 0,
-                calc(100% - 15px) 0,
-                100% 15px,
-                100% 100%,
+                100% 0,
+                100% calc(100% - 15px),
+                calc(100% - 15px) 100%,
                 0 100%,
                 0 0
-            );
+            ); /* Angepasste clip-path, um obere rechte Ecke zu bewahren */
             display: flex;
             justify-content: center;
             align-items: center;
