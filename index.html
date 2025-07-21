@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" id="viewport" content="width=1170">
+    <meta name="左右
+        name="viewport" id="viewport" content="width=1170">
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -86,7 +87,8 @@
 
         .inventory-field.market-expanded,
         .inventory-field.fuel-trade,
-        .inventory-field.food-trade {
+        .inventory-field.food-trade,
+        .inventory-field.resources-trade {
             height: auto;
             background-color: rgba(0, 31, 47, 0.75);
         }
@@ -116,7 +118,8 @@
         }
 
         .inventory-text.fuel-trade,
-        .inventory-text.food-trade {
+        .inventory-text.food-trade,
+        .inventory-text.resources-trade {
             height: auto;
             padding: 48px 20px 134px 20px;
             align-items: flex-start;
@@ -132,7 +135,8 @@
         .inventory-text.radar-expanded .row,
         .inventory-text.market-expanded .row,
         .inventory-text.fuel-trade .row,
-        .inventory-text.food-trade .row {
+        .inventory-text.food-trade .row,
+        .inventory-text.resources-trade .row {
             justify-content: flex-start;
         }
 
@@ -410,6 +414,7 @@
             credits: 1000,
             fuel: 0,
             food: 0,
+            resources: 0,
             cargo: 0,
             maxCargo: 10
         };
@@ -426,8 +431,8 @@
             document.body.style.backgroundImage = "url('background.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
             inventoryText.innerHTML = `
                 <div class="row">
                     <span>Schiff: 100%</span>
@@ -452,9 +457,9 @@
             document.body.style.backgroundImage = "url('market-zorak.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
             inventoryField.classList.add('market-expanded');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
             inventoryText.classList.add('market-expanded');
             inventoryText.innerHTML = `
                 <div class="row"><span>Marktplatz auf Zorak</span></div>
@@ -476,6 +481,8 @@
                         showFuelTradeView();
                     } else if (resource === 'food') {
                         showFoodTradeView();
+                    } else if (resource === 'resources') {
+                        showResourcesTradeView();
                     }
                 });
             });
@@ -485,9 +492,9 @@
             document.body.style.backgroundImage = "url('market-zorak.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade', 'resources-trade');
             inventoryField.classList.add('fuel-trade');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade', 'resources-trade');
             inventoryText.classList.add('fuel-trade');
             const buyDisabled = playerData.credits < 20 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
             const sellDisabled = playerData.fuel <= 0 ? 'disabled' : '';
@@ -529,9 +536,9 @@
             document.body.style.backgroundImage = "url('market-zorak.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'resources-trade');
             inventoryField.classList.add('food-trade');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'resources-trade');
             inventoryText.classList.add('food-trade');
             const buyDisabled = playerData.credits < 35 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
             const sellDisabled = playerData.food <= 0 ? 'disabled' : '';
@@ -569,23 +576,67 @@
             });
         }
 
+        function showResourcesTradeView() {
+            document.body.style.backgroundImage = "url('market-zorak.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
+            inventoryField.classList.add('resources-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
+            inventoryText.classList.add('resources-trade');
+            const buyDisabled = playerData.credits < 17 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
+            const sellDisabled = playerData.resources <= 0 ? 'disabled' : '';
+            inventoryText.innerHTML = `
+                <div class="row"><span>Auf rohstoffreichen Planeten günstig, auf knappen teuer. Wichtig für Handel und zum Reparieren deines Schiffs.</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span>Preis: 17 Credits pro Einheit</span></div>
+                <div class="row empty"></div>
+                <div class="row empty"></div>
+                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'MARKTPLATZ';
+
+            const buyButton = document.querySelector('.buy-button');
+            const sellButton = document.querySelector('.sell-button');
+            buyButton.addEventListener('click', function() {
+                if (playerData.credits >= 17 && playerData.cargo < playerData.maxCargo) {
+                    playerData.credits -= 17;
+                    playerData.resources += 1;
+                    playerData.cargo += 1;
+                    showResourcesTradeView();
+                }
+            });
+            sellButton.addEventListener('click', function() {
+                if (playerData.resources > 0) {
+                    playerData.credits += 17;
+                    playerData.resources -= 1;
+                    playerData.cargo -= 1;
+                    showResourcesTradeView();
+                }
+            });
+        }
+
         document.querySelector('.ship-field').addEventListener('click', function() {
             document.body.style.backgroundImage = "url('lager.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
             inventoryField.classList.add('ship-expanded');
             inventoryText.classList.add('ship-expanded');
-            inventoryField.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
-            inventoryText.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
+            inventoryField.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
             inventoryText.innerHTML = `
                 <div class="row"><span>Frachtraum ${playerData.cargo}/${playerData.maxCargo}</span></div>
                 <div class="row empty"></div>
                 <div class="row"><span>Treibstoff: ${playerData.fuel}</span></div>
                 <div class="row"><span>Lebensmittel: ${playerData.food}</span></div>
+                <div class="row"><span>Rohstoffe: ${playerData.resources}</span></div>
                 <div class="row"><span>Waffen: 0</span></div>
                 <div class="row"><span>Drogen: 0</span></div>
                 <div class="row"><span>Kunstwerke: 0</span></div>
-                <div class="row"><span>Rohstoffe: 0</span></div>
                 <div class="row"><span>Technikkomponenten: 0</span></div>
             `;
             document.querySelector('.ship-field').style.display = 'none';
@@ -601,8 +652,8 @@
             const inventoryText = document.querySelector('.inventory-text');
             inventoryField.classList.add('radar-expanded');
             inventoryText.classList.add('radar-expanded');
-            inventoryField.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
-            inventoryText.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
+            inventoryField.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
             inventoryText.innerHTML = `
                 <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
                 <div class="row empty"></div>
