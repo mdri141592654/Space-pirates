@@ -76,7 +76,7 @@
             justify-content: center;
             align-items: center;
             transition: height 0.3s ease;
-            overflow: visible; /* Verhindert Abschneiden der Buttons */
+            overflow: visible; /* Verhindert Abschneiden */
         }
 
         .inventory-field.ship-expanded,
@@ -91,6 +91,7 @@
         .inventory-field.resources-trade {
             height: auto;
             background-color: rgba(0, 31, 47, 0.75);
+            min-height: 400px; /* Mindesthöhe, um Inhalt vollständig anzuzeigen */
         }
 
         .inventory-text {
@@ -108,7 +109,7 @@
             align-items: center;
             line-height: 1.2;
             margin: 0;
-            position: relative; /* Stellt sicher, dass absolute Buttons korrekt positioniert sind */
+            position: relative;
         }
 
         .inventory-text.ship-expanded,
@@ -123,7 +124,7 @@
         .inventory-text.food-trade,
         .inventory-text.resources-trade {
             height: auto;
-            padding: 48px 20px 160px 20px; /* Erhöht auf 160px, um Buttons vollständig anzuzeigen */
+            padding: 48px 20px 20px 20px; /* Reduziert Padding-bottom, da Buttons nicht mehr absolut positioniert */
             align-items: flex-start;
         }
 
@@ -144,7 +145,7 @@
         }
 
         .inventory-text .row.empty {
-            height: 45px; /* Exakt 45px zwischen Preiszeile und Buttons */
+            height: 45px; /* 45px Abstand zwischen Preiszeile und Buttons */
         }
 
         .ship-field {
@@ -307,9 +308,6 @@
         }
 
         .buy-button {
-            position: absolute;
-            left: 20px;
-            bottom: -34px;
             height: 96px;
             background-color: #064c2b;
             clip-path: polygon(
@@ -331,6 +329,7 @@
             text-stroke: 2px #000000;
             border: none;
             cursor: pointer;
+            margin-right: 20px; /* Abstand zwischen den Buttons */
         }
 
         .buy-button.disabled {
@@ -342,9 +341,6 @@
         }
 
         .sell-button {
-            position: absolute;
-            right: 20px;
-            bottom: -34px;
             height: 96px;
             background-color: #d15609;
             clip-path: polygon(
@@ -512,25 +508,6 @@
             document.querySelector('.land-field').style.display = 'none';
             document.querySelector('.back-field').style.display = 'flex';
             document.querySelector('.back-text').textContent = 'MARKTPLATZ';
-
-            const buyButton = document.querySelector('.buy-button');
-            const sellButton = document.querySelector('.sell-button');
-            buyButton.addEventListener('click', function() {
-                if (playerData.credits >= 20 && playerData.cargo < playerData.maxCargo) {
-                    playerData.credits -= 20;
-                    playerData.fuel += 1;
-                    playerData.cargo += 1;
-                    showFuelTradeView();
-                }
-            });
-            sellButton.addEventListener('click', function() {
-                if (playerData.fuel > 0) {
-                    playerData.credits += 20;
-                    playerData.fuel -= 1;
-                    playerData.cargo -= 1;
-                    showFuelTradeView();
-                }
-            });
         }
 
         function showFoodTradeView() {
@@ -554,25 +531,6 @@
             document.querySelector('.land-field').style.display = 'none';
             document.querySelector('.back-field').style.display = 'flex';
             document.querySelector('.back-text').textContent = 'MARKTPLATZ';
-
-            const buyButton = document.querySelector('.buy-button');
-            const sellButton = document.querySelector('.sell-button');
-            buyButton.addEventListener('click', function() {
-                if (playerData.credits >= 35 && playerData.cargo < playerData.maxCargo) {
-                    playerData.credits -= 35;
-                    playerData.food += 1;
-                    playerData.cargo += 1;
-                    showFoodTradeView();
-                }
-            });
-            sellButton.addEventListener('click', function() {
-                if (playerData.food > 0) {
-                    playerData.credits += 35;
-                    playerData.food -= 1;
-                    playerData.cargo -= 1;
-                    showFoodTradeView();
-                }
-            });
         }
 
         function showResourcesTradeView() {
@@ -596,25 +554,6 @@
             document.querySelector('.land-field').style.display = 'none';
             document.querySelector('.back-field').style.display = 'flex';
             document.querySelector('.back-text').textContent = 'MARKTPLATZ';
-
-            const buyButton = document.querySelector('.buy-button');
-            const sellButton = document.querySelector('.sell-button');
-            buyButton.addEventListener('click', function() {
-                if (playerData.credits >= 17 && playerData.cargo < playerData.maxCargo) {
-                    playerData.credits -= 17;
-                    playerData.resources += 1;
-                    playerData.cargo += 1;
-                    showResourcesTradeView();
-                }
-            });
-            sellButton.addEventListener('click', function() {
-                if (playerData.resources > 0) {
-                    playerData.credits += 17;
-                    playerData.resources -= 1;
-                    playerData.cargo -= 1;
-                    showResourcesTradeView();
-                }
-            });
         }
 
         document.querySelector('.ship-field').addEventListener('click', function() {
@@ -677,6 +616,70 @@
             } else {
                 resetToMainMenu();
             }
+        });
+
+        // Event-Listener für die Buttons hinzufügen
+        function addButtonListeners() {
+            const buyButton = document.querySelector('.buy-button');
+            const sellButton = document.querySelector('.sell-button');
+            if (buyButton && sellButton) {
+                buyButton.addEventListener('click', function() {
+                    if (this.classList.contains('fuel-trade')) {
+                        if (playerData.credits >= 20 && playerData.cargo < playerData.maxCargo) {
+                            playerData.credits -= 20;
+                            playerData.fuel += 1;
+                            playerData.cargo += 1;
+                            showFuelTradeView();
+                        }
+                    } else if (this.classList.contains('food-trade')) {
+                        if (playerData.credits >= 35 && playerData.cargo < playerData.maxCargo) {
+                            playerData.credits -= 35;
+                            playerData.food += 1;
+                            playerData.cargo += 1;
+                            showFoodTradeView();
+                        }
+                    } else if (this.classList.contains('resources-trade')) {
+                        if (playerData.credits >= 17 && playerData.cargo < playerData.maxCargo) {
+                            playerData.credits -= 17;
+                            playerData.resources += 1;
+                            playerData.cargo += 1;
+                            showResourcesTradeView();
+                        }
+                    }
+                });
+
+                sellButton.addEventListener('click', function() {
+                    if (this.classList.contains('fuel-trade')) {
+                        if (playerData.fuel > 0) {
+                            playerData.credits += 20;
+                            playerData.fuel -= 1;
+                            playerData.cargo -= 1;
+                            showFuelTradeView();
+                        }
+                    } else if (this.classList.contains('food-trade')) {
+                        if (playerData.food > 0) {
+                            playerData.credits += 35;
+                            playerData.food -= 1;
+                            playerData.cargo -= 1;
+                            showFoodTradeView();
+                        }
+                    } else if (this.classList.contains('resources-trade')) {
+                        if (playerData.resources > 0) {
+                            playerData.credits += 17;
+                            playerData.resources -= 1;
+                            playerData.cargo -= 1;
+                            showResourcesTradeView();
+                        }
+                    }
+                });
+            }
+        }
+
+        // Listener nach jedem View-Update hinzufügen
+        ['fuel-trade', 'food-trade', 'resources-trade'].forEach(view => {
+            document.querySelector(`.inventory-field.${view}`).addEventListener('click', function() {
+                addButtonListeners();
+            });
         });
     </script>
 </body>
