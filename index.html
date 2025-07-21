@@ -294,18 +294,15 @@
         .buy-button {
             position: absolute;
             left: 20px;
-            bottom: 20px;
+            bottom: -34px;
             height: 96px;
             background-color: #064c2b;
             clip-path: polygon(
-                5px 0,
-                calc(100% - 5px) 0,
-                100% 5px,
-                100% calc(100% - 5px),
-                calc(100% - 5px) 100%,
-                5px 100%,
-                0 calc(100% - 5px),
-                0 5px
+                0 0,
+                100% 0,
+                100% 100%,
+                15px 100%,
+                0 calc(100% - 15px)
             );
             display: flex;
             justify-content: center;
@@ -321,21 +318,27 @@
             cursor: pointer;
         }
 
+        .buy-button.disabled {
+            background-color: #4a4a4a;
+            color: #8a8a8a;
+            -webkit-text-stroke: 2px #000000;
+            text-stroke: 2px #000000;
+            cursor: not-allowed;
+        }
+
         .sell-button {
             position: absolute;
             right: 20px;
-            bottom: 20px;
+            bottom: -34px;
             height: 96px;
             background-color: #d15609;
             clip-path: polygon(
-                5px 0,
-                calc(100% - 5px) 0,
-                100% 5px,
-                100% calc(100% - 5px),
-                calc(100% - 5px) 100%,
-                5px 100%,
-                0 calc(100% - 5px),
-                0 5px
+                0 0,
+                calc(100% - 15px) 0,
+                100% 15px,
+                100% 100%,
+                0 100%,
+                0 0
             );
             display: flex;
             justify-content: center;
@@ -349,6 +352,14 @@
             text-stroke: 2px #000000;
             border: none;
             cursor: pointer;
+        }
+
+        .sell-button.disabled {
+            background-color: #4a4a4a;
+            color: #8a8a8a;
+            -webkit-text-stroke: 2px #000000;
+            text-stroke: 2px #000000;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -387,7 +398,13 @@
     <script>
         console.log("Space Pirates initialized");
 
-        // Dynamische Skalierung des Viewports basierend auf Gerätebreite
+        let playerData = {
+            credits: 1000,
+            fuel: 0,
+            cargo: 0,
+            maxCargo: 10
+        };
+
         window.onload = function() {
             const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
             const pageWidth = 1170;
@@ -396,7 +413,6 @@
             viewportMeta.setAttribute('content', `width=1170, initial-scale=${scale}`);
         };
 
-        // Funktion zum Zurücksetzen ins Hauptmenü
         function resetToMainMenu() {
             document.body.style.backgroundImage = "url('background.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
@@ -406,10 +422,10 @@
             inventoryText.innerHTML = `
                 <div class="row">
                     <span>Schiff: 100%</span>
-                    <span>1000 :Credits</span>
+                    <span>${playerData.credits} :Credits</span>
                 </div>
                 <div class="row">
-                    <span>Kleinraumschiff 0/10</span>
+                    <span>Kleinraumschiff ${playerData.cargo}/${playerData.maxCargo}</span>
                     <span>21.05.4025</span>
                 </div>
                 <div class="row">
@@ -423,7 +439,6 @@
             document.querySelector('.back-text').textContent = '';
         }
 
-        // Funktion für die market-expanded Ansicht
         function showMarketView() {
             document.body.style.backgroundImage = "url('market-zorak.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
@@ -445,19 +460,16 @@
             document.querySelector('.back-field').style.display = 'flex';
             document.querySelector('.back-text').textContent = 'STARTEN';
 
-            // Event-Listener für Handel-Buttons hinzufügen
             document.querySelectorAll('.trade-button').forEach(button => {
                 button.addEventListener('click', function() {
                     const resource = this.getAttribute('data-resource');
                     if (resource === 'fuel') {
                         showFuelTradeView();
                     }
-                    // Hier können später Handler für Lebensmittel und Rohstoffe hinzugefügt werden
                 });
             });
         }
 
-        // Funktion für die Treibstoff-Handel-Ansicht
         function showFuelTradeView() {
             document.body.style.backgroundImage = "url('market-zorak.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
@@ -466,21 +478,42 @@
             inventoryField.classList.add('fuel-trade');
             inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded');
             inventoryText.classList.add('fuel-trade');
+            const buyDisabled = playerData.credits < 20 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
+            const sellDisabled = playerData.fuel <= 0 ? 'disabled' : '';
             inventoryText.innerHTML = `
                 <div class="row"><span>Unverzichtbar für Reisen zwischen Planeten und Galaxien. Der Verbrauch steigt mit der Entfernung. Die Qualität ist überall gleich – nur der Preis variiert je nach Planet.</span></div>
                 <div class="row empty"></div>
                 <div class="row"><span>Preis: 20 Credits pro Einheit</span></div>
                 <div class="row empty"></div>
-                <div class="row"><span class="buy-button">KAUFEN</span><span class="sell-button">VERKAUFEN</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
             `;
             document.querySelector('.ship-field').style.display = 'none';
             document.querySelector('.radar-field').style.display = 'none';
             document.querySelector('.land-field').style.display = 'none';
             document.querySelector('.back-field').style.display = 'flex';
             document.querySelector('.back-text').textContent = 'MARKTPLATZ';
+
+            const buyButton = document.querySelector('.buy-button');
+            const sellButton = document.querySelector('.sell-button');
+            buyButton.addEventListener('click', function() {
+                if (playerData.credits >= 20 && playerData.cargo < playerData.maxCargo) {
+                    playerData.credits -= 20;
+                    playerData.fuel += 1;
+                    playerData.cargo += 1;
+                    showFuelTradeView();
+                }
+            });
+            sellButton.addEventListener('click', function() {
+                if (playerData.fuel > 0) {
+                    playerData.credits += 20;
+                    playerData.fuel -= 1;
+                    playerData.cargo -= 1;
+                    showFuelTradeView();
+                }
+            });
         }
 
-        // Klick-Event für ship-field
         document.querySelector('.ship-field').addEventListener('click', function() {
             document.body.style.backgroundImage = "url('lager.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
@@ -490,9 +523,9 @@
             inventoryField.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade');
             inventoryText.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade');
             inventoryText.innerHTML = `
-                <div class="row"><span>Frachtraum 0/10</span></div>
+                <div class="row"><span>Frachtraum ${playerData.cargo}/${playerData.maxCargo}</span></div>
                 <div class="row empty"></div>
-                <div class="row"><span>Treibstoff: 0</span></div>
+                <div class="row"><span>Treibstoff: ${playerData.fuel}</span></div>
                 <div class="row"><span>Lebensmittel: 0</span></div>
                 <div class="row"><span>Waffen: 0</span></div>
                 <div class="row"><span>Drogen: 0</span></div>
@@ -507,7 +540,6 @@
             document.querySelector('.back-text').textContent = 'ZURÜCK';
         });
 
-        // Klick-Event für radar-field
         document.querySelector('.radar-field').addEventListener('click', function() {
             document.body.style.backgroundImage = "url('pilot.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
@@ -533,10 +565,8 @@
             document.querySelector('.back-text').textContent = 'ZURÜCK';
         });
 
-        // Klick-Event für land-field
         document.querySelector('.land-field').addEventListener('click', showMarketView);
 
-        // Klick-Event für back-field
         document.querySelector('.back-field').addEventListener('click', function() {
             const backText = document.querySelector('.back-text').textContent;
             if (backText === 'MARKTPLATZ') {
