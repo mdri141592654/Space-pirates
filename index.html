@@ -282,6 +282,7 @@
             color: #dc857e;
             border: 1px solid #000000;
             cursor: pointer;
+            opacity: 1; /* Entfernt Transparenz */
         }
     </style>
 </head>
@@ -294,7 +295,7 @@
             <div class="row">
                 <span>Schiff: 100%</span>
                 <span>1000 :Credits</span>
-            </ross: 0px; /* Ändere zurück zu 100% */
+            </div>
             <div class="row">
                 <span>Kleinraumschiff 0/10</span>
                 <span>21.05.4025</span>
@@ -416,8 +417,8 @@
                 <div class="row"><span>Marktplatz auf Zorak</span></div>
                 <div class="row empty"></div>
                 <div class="row"><span>Treibstoff: 20 Credits</span><span class="trade-button">Handel</span></div>
-                <div class="row"><span>Lebensmittel: 35 Credits</span></div>
-                <div class="row"><span>Rohstoffe: 17 Credits</span></div>
+                <div class="row"><span>Lebensmittel: 35 Credits</span><span class="trade-button">Handel</span></div>
+                <div class="row"><span>Rohstoffe: 17 Credits</span><span class="trade-button">Handel</span></div>
             `;
             document.querySelector('.ship-field').style.display = 'none';
             document.querySelector('.radar-field').style.display = 'none';
