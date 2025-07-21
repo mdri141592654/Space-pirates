@@ -76,6 +76,7 @@
             justify-content: center;
             align-items: center;
             transition: height 0.3s ease;
+            overflow: visible; /* Verhindert Abschneiden der Buttons */
         }
 
         .inventory-field.ship-expanded,
@@ -106,7 +107,8 @@
             justify-content: center;
             align-items: center;
             line-height: 1.2;
-            margin: 0; /* Entfernt mögliche Standard-Margins */
+            margin: 0;
+            position: relative; /* Stellt sicher, dass absolute Buttons korrekt positioniert sind */
         }
 
         .inventory-text.ship-expanded,
@@ -121,7 +123,7 @@
         .inventory-text.food-trade,
         .inventory-text.resources-trade {
             height: auto;
-            padding: 48px 20px 150px 20px; /* 20px Abstand unter Buttons */
+            padding: 48px 20px 160px 20px; /* Erhöht auf 160px, um Buttons vollständig anzuzeigen */
             align-items: flex-start;
         }
 
@@ -129,7 +131,7 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin: 0; /* Entfernt mögliche Margins */
+            margin: 0;
         }
 
         .inventory-text.ship-expanded .row,
@@ -142,7 +144,7 @@
         }
 
         .inventory-text .row.empty {
-            height: 45px; /* Exakt 45px für eine Zeile Abstand */
+            height: 45px; /* Exakt 45px zwischen Preiszeile und Buttons */
         }
 
         .ship-field {
