@@ -6,7 +6,6 @@
     <title>Space Pirates</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        /* Unverändert wie im vorherigen Code */
         html, body {
             margin: 0;
             padding: 0;
@@ -257,6 +256,33 @@
             text-stroke: 2px #000000;
             text-align: center;
         }
+
+        .trade-button {
+            position: absolute;
+            right: 20px;
+            height: 48px;
+            background-color: #3d1753;
+            clip-path: polygon(
+                5px 0,
+                calc(100% - 5px) 0,
+                100% 5px,
+                100% calc(100% - 5px),
+                calc(100% - 5px) 100%,
+                5px 100%,
+                0 calc(100% - 5px),
+                0 5px
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 24px;
+            color: #dc857e;
+            border: 1px solid #000000;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -268,7 +294,7 @@
             <div class="row">
                 <span>Schiff: 100%</span>
                 <span>1000 :Credits</span>
-            </div>
+            </ross: 0px; /* Ändere zurück zu 100% */
             <div class="row">
                 <span>Kleinraumschiff 0/10</span>
                 <span>21.05.4025</span>
@@ -389,7 +415,7 @@
             inventoryText.innerHTML = `
                 <div class="row"><span>Marktplatz auf Zorak</span></div>
                 <div class="row empty"></div>
-                <div class="row"><span>Treibstoff: 20 Credits</span></div>
+                <div class="row"><span>Treibstoff: 20 Credits</span><span class="trade-button">Handel</span></div>
                 <div class="row"><span>Lebensmittel: 35 Credits</span></div>
                 <div class="row"><span>Rohstoffe: 17 Credits</span></div>
             `;
