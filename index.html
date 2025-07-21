@@ -79,10 +79,14 @@
         }
 
         .inventory-field.ship-expanded,
-        .inventory-field.radar-expanded,
-        .inventory-field.market-expanded {
+        .inventory-field.radar-expanded {
             height: auto;
             opacity: 0.75;
+        }
+
+        .inventory-field.market-expanded {
+            height: auto;
+            background-color: rgba(0, 31, 47, 0.75); /* Halbtransparente Hintergrundfarbe */
         }
 
         .inventory-text {
@@ -107,7 +111,6 @@
             height: auto;
             padding: 48px 20px;
             align-items: flex-start;
-            opacity: 1; /* Schrift in market-expanded nicht transparent */
         }
 
         .inventory-text .row {
@@ -281,9 +284,8 @@
             font-weight: 900;
             font-size: 24px;
             color: #dc857e;
-            border: none; /* Umrandung entfernt */
+            border: none;
             cursor: pointer;
-            opacity: 1; /* Nicht transparent */
         }
     </style>
 </head>
