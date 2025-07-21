@@ -108,10 +108,15 @@
 
         .inventory-text.ship-expanded,
         .inventory-text.radar-expanded,
-        .inventory-text.market-expanded,
-        .inventory-text.fuel-trade {
+        .inventory-text.market-expanded {
             height: auto;
             padding: 48px 20px;
+            align-items: flex-start;
+        }
+
+        .inventory-text.fuel-trade {
+            height: auto;
+            padding: 48px 20px 134px 20px; /* 96px Button-Höhe + 20px Abstand + 18px für bottom: -34px */
             align-items: flex-start;
         }
 
