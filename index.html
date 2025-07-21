@@ -106,6 +106,7 @@
             justify-content: center;
             align-items: center;
             line-height: 1.2;
+            margin: 0; /* Entfernt mögliche Standard-Margins */
         }
 
         .inventory-text.ship-expanded,
@@ -120,7 +121,7 @@
         .inventory-text.food-trade,
         .inventory-text.resources-trade {
             height: auto;
-            padding: 48px 20px 150px 20px;
+            padding: 48px 20px 150px 20px; /* 20px Abstand unter Buttons */
             align-items: flex-start;
         }
 
@@ -128,6 +129,7 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
+            margin: 0; /* Entfernt mögliche Margins */
         }
 
         .inventory-text.ship-expanded .row,
@@ -140,7 +142,7 @@
         }
 
         .inventory-text .row.empty {
-            height: 45px;
+            height: 45px; /* Exakt 45px für eine Zeile Abstand */
         }
 
         .ship-field {
@@ -499,7 +501,6 @@
             const sellDisabled = playerData.fuel <= 0 ? 'disabled' : '';
             inventoryText.innerHTML = `
                 <div class="row"><span>Unverzichtbar für Reisen zwischen Planeten und Galaxien. Der Verbrauch steigt mit der Entfernung. Die Qualität ist überall gleich – nur der Preis variiert je nach Planet.</span></div>
-                <div class="row empty"></div>
                 <div class="row"><span>Preis: 20 Credits pro Einheit</span></div>
                 <div class="row empty"></div>
                 <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
@@ -542,7 +543,6 @@
             const sellDisabled = playerData.food <= 0 ? 'disabled' : '';
             inventoryText.innerHTML = `
                 <div class="row"><span>Wichtige Handelsware – auf manchen Planeten günstig, auf anderen teuer. Außerdem benötigt deine Crew Vorräte für lange Reisen. Ohne Verpflegung sinkt die Moral.</span></div>
-                <div class="row empty"></div>
                 <div class="row"><span>Preis: 35 Credits pro Einheit</span></div>
                 <div class="row empty"></div>
                 <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
@@ -585,7 +585,6 @@
             const sellDisabled = playerData.resources <= 0 ? 'disabled' : '';
             inventoryText.innerHTML = `
                 <div class="row"><span>Auf rohstoffreichen Planeten günstig, auf knappen teuer. Wichtig für Handel und zum Reparieren deines Schiffs.</span></div>
-                <div class="row empty"></div>
                 <div class="row"><span>Preis: 17 Credits pro Einheit</span></div>
                 <div class="row empty"></div>
                 <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
