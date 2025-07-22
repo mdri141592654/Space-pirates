@@ -63,6 +63,7 @@
             align-items: center;
             margin-top: 0.5vh;
             overflow: visible;
+            position: relative; /* Für absolute Positionierung der Handel-Buttons */
         }
 
         .inventory-field.ship-expanded,
@@ -70,7 +71,7 @@
         .inventory-field.market-expanded {
             height: auto;
             opacity: 0.75;
-            margin-top: 0.5vh; /* Konsistenter Abstand für alle erweiterten Zustände */
+            margin-top: 0.5vh;
         }
 
         .inventory-field.fuel-trade,
@@ -80,7 +81,7 @@
             height: auto;
             background-color: rgba(0, 31, 47, 0.75);
             min-height: 20.2vh;
-            margin-top: 0.5vh; /* Konsistenter Abstand für Handel-Zustände */
+            margin-top: 0.5vh;
         }
 
         .inventory-text {
@@ -98,7 +99,7 @@
             align-items: center;
             line-height: 1.2;
             margin: 0;
-            padding: 2.4vh 1%; /* Einheitliches Padding für alle Zustände */
+            padding: 2.4vh 1%;
         }
 
         .inventory-text.ship-expanded,
@@ -108,7 +109,7 @@
         .inventory-text.food-trade,
         .inventory-text.resources-trade {
             height: auto;
-            padding: 2.4vh 1%; /* Konsistentes Padding */
+            padding: 2.4vh 1%;
             align-items: flex-start;
             font-size: 3.5vw;
         }
@@ -128,6 +129,10 @@
         .inventory-text.food-trade .row,
         .inventory-text.resources-trade .row {
             justify-content: flex-start;
+        }
+
+        .inventory-text.market-expanded .row:first-child span {
+            font-size: 5.25vw; /* 1.5-fache Größe von 3.5vw */
         }
 
         .ship-field {
@@ -220,7 +225,6 @@
 
         .trade-button {
             position: absolute;
-            right: calc(1% - 1.5 * (0.85vw + 1.7vw));
             height: 4.1vh;
             background-color: #3d1753;
             display: flex;
@@ -233,6 +237,7 @@
             color: #dc857e;
             border: none;
             cursor: pointer;
+            right: 2%; /* Abstand zum rechten Rand des Inventarfelds, entsprechend 2% (ca. der Padding-Abstand links) */
         }
 
         .buy-button {
@@ -388,9 +393,11 @@
             inventoryText.classList.add('market-expanded');
             inventoryText.innerHTML = `
                 <div class="row"><span>Marktplatz auf Zorak</span></div>
-                <div class="row empty"></div>
+                <div class="row empty"></div> <!-- Leere Zeile -->
                 <div class="row"><span>Treibstoff: 20 Credits</span><span class="trade-button" data-resource="fuel">Handel</span></div>
+                <div class="row empty"></div> <!-- Leere Zeile -->
                 <div class="row"><span>Lebensmittel: 35 Credits</span><span class="trade-button" data-resource="food">Handel</span></div>
+                <div class="row empty"></div> <!-- Leere Zeile -->
                 <div class="row"><span>Rohstoffe: 17 Credits</span><span class="trade-button" data-resource="resources">Handel</span></div>
             `;
             document.querySelector('.ship-field').style.display = 'none';
