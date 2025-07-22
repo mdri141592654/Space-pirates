@@ -14,35 +14,39 @@
             background-color: #000000;
             background-image: url('background.jpg');
             background-size: contain;
-            background-position: center;
+            background-position: top left;
             background-repeat: no-repeat;
             overflow: auto;
             overflow-x: hidden;
         }
 
         .game-container {
-            width: 88%;
+            width: 100%; /* Erhöht auf 100% für Handelsfelder */
             margin: 0 auto;
             height: 100%;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
         }
 
         .header-field {
-            width: 100%;
+            width: 88%;
             height: 8.8vh;
             background-color: #003f2c;
             clip-path: polygon(
-                4.5% 0,
-                95.5% 0,
-                100% 4.5%,
+                5% 0,
+                95% 0,
+                100% 5%,
                 100% 100%,
                 0 100%,
-                0 4.5%
+                0 5%
             );
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 2.4vh;
+            margin-top: 1vh; /* Reduzierter Abstand */
         }
 
         .header-text {
@@ -59,21 +63,21 @@
         }
 
         .inventory-field {
-            width: 100%;
+            width: 88%;
             height: 10.1vh;
             background-color: #001f2f;
             clip-path: polygon(
                 0 0,
                 100% 0,
-                100% 95.5%,
-                95.5% 100%,
-                4.5% 100%,
-                0 95.5%
+                100% 95%,
+                95% 100%,
+                5% 100%,
+                0 95%
             );
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 2.4vh;
+            margin-top: 1vh; /* Reduzierter Abstand */
             overflow: visible;
         }
 
@@ -87,6 +91,7 @@
         .inventory-field.fuel-trade,
         .inventory-field.food-trade,
         .inventory-field.resources-trade {
+            width: 100%; /* Doppelt so breit */
             height: auto;
             background-color: rgba(0, 31, 47, 0.75);
             min-height: 20.2vh;
@@ -115,6 +120,7 @@
             height: auto;
             padding: 2.4vh 1%;
             align-items: flex-start;
+            font-size: 5vw; /* Größerer Text für Handelsfelder */
         }
 
         .inventory-text.fuel-trade,
@@ -123,6 +129,7 @@
             height: auto;
             padding: 2.4vh 1% 1% 1%;
             align-items: flex-start;
+            font-size: 5vw; /* Größerer Text für Handelsfelder */
         }
 
         .inventory-text .row {
@@ -147,24 +154,25 @@
         }
 
         .ship-field {
-            width: 100%;
+            width: 88%;
             height: 8.1vh;
             background-color: #064b2a;
             clip-path: polygon(
-                4.5% 0,
-                95.5% 0,
-                100% 4.5%,
-                100% 95.5%,
-                95.5% 100%,
-                4.5% 100%,
-                0 95.5%,
-                0 4.5%
+                5% 0,
+                95% 0,
+                100% 5%,
+                100% 95%,
+                95% 100%,
+                5% 100%,
+                0 95%,
+                0 5%
             );
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            margin-top: 2.4vh;
+            position: absolute;
+            bottom: 5%; /* Abstand 5% vom unteren Rand */
         }
 
         .ship-text {
@@ -178,24 +186,25 @@
         }
 
         .radar-field {
-            width: 100%;
+            width: 88%;
             height: 8.1vh;
             background-color: #005265;
             clip-path: polygon(
-                4.5% 0,
-                95.5% 0,
-                100% 4.5%,
-                100% 95.5%,
-                95.5% 100%,
-                4.5% 100%,
-                0 95.5%,
-                0 4.5%
+                5% 0,
+                95% 0,
+                100% 5%,
+                100% 95%,
+                95% 100%,
+                5% 100%,
+                0 95%,
+                0 5%
             );
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            margin-top: 1.2vh;
+            position: absolute;
+            bottom: 14.2%; /* 5% + 8.1vh + 1.2vh Abstand */
         }
 
         .radar-text {
@@ -209,24 +218,25 @@
         }
 
         .land-field {
-            width: 100%;
+            width: 88%;
             height: 8.1vh;
             background-color: #c14d08;
             clip-path: polygon(
-                4.5% 0,
-                95.5% 0,
-                100% 4.5%,
-                100% 95.5%,
-                95.5% 100%,
-                4.5% 100%,
-                0 95.5%,
-                0 4.5%
+                5% 0,
+                95% 0,
+                100% 5%,
+                100% 95%,
+                95% 100%,
+                5% 100%,
+                0 95%,
+                0 5%
             );
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            margin-top: 1.2vh;
+            position: absolute;
+            bottom: 23.4%; /* 14.2% + 8.1vh + 1.2vh Abstand */
         }
 
         .land-text {
@@ -240,24 +250,25 @@
         }
 
         .back-field {
-            width: 100%;
+            width: 88%;
             height: 8.1vh;
             background-color: #c14d08;
             clip-path: polygon(
-                4.5% 0,
-                95.5% 0,
-                100% 4.5%,
-                100% 95.5%,
-                95.5% 100%,
-                4.5% 100%,
-                0 95.5%,
-                0 4.5%
+                5% 0,
+                95% 0,
+                100% 5%,
+                100% 95%,
+                95% 100%,
+                5% 100%,
+                0 95%,
+                0 5%
             );
             display: none;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            margin-top: 1.2vh;
+            position: absolute;
+            bottom: 23.4%; /* Gleiche Position wie Land-field */
         }
 
         .back-text {
@@ -291,7 +302,7 @@
             padding: 0 0.85vw;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 1.5vw;
+            font-size: 2vw; /* Erhöht für bessere Lesbarkeit */
             color: #dc857e;
             border: none;
             cursor: pointer;
@@ -313,7 +324,7 @@
             padding: 0 1.7vw;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 2.3vw;
+            font-size: 4vw; /* Größerer Text */
             color: #b7de3e;
             -webkit-text-stroke: 0.1vw #000000;
             text-stroke: 0.1vw #000000;
@@ -349,7 +360,7 @@
             padding: 0 1.7vw;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 2.3vw;
+            font-size: 4vw; /* Größerer Text */
             color: #ed770e;
             -webkit-text-stroke: 0.1vw #000000;
             text-stroke: 0.1vw #000000;
@@ -381,7 +392,7 @@
             padding: 0 0.85vw;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 1.5vw;
+            font-size: 2vw; /* Erhöht für bessere Lesbarkeit */
             color: #0d7de1;
             border: none;
             cursor: pointer;
@@ -404,7 +415,7 @@
             padding: 0 0.85vw;
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 1.5vw;
+            font-size: 2vw; /* Erhöht für bessere Lesbarkeit */
             color: #b7de3e;
             -webkit-text-stroke: 0.1vw #000000;
             text-stroke: 0.1vw #000000;
