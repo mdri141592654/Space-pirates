@@ -146,7 +146,7 @@
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 21.2%; /* 23.4% - 8.1vh + Anpassung */
+            bottom: 13.1%; /* 21.2% - 8.1vh */
         }
 
         .ship-text {
@@ -168,7 +168,7 @@
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 13.1%; /* 14.2% - 8.1vh + Anpassung */
+            bottom: 5%; /* 13.1% - 8.1vh */
         }
 
         .radar-text {
@@ -190,7 +190,7 @@
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 5%; /* 5% - 8.1vh + Anpassung, Basis */
+            bottom: -3.1%; /* 5% - 8.1vh, angepasst auf 5% als Basis und dann verschoben */
         }
 
         .land-text {
@@ -462,7 +462,7 @@
 
         function showFoodTradeView() {
             document.body.style.backgroundImage = "url('market-zorak.jpg')";
-            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryField = document.queryselector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
             inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'resources-trade');
             inventoryField.classList.add('food-trade');
