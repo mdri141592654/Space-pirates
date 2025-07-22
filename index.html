@@ -146,7 +146,7 @@
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 31.5%; /* Geändert von 23.4% zu 31.5% */
+            bottom: 29%; /* Geändert von 31.5% zu 29% */
         }
 
         .ship-text {
@@ -168,7 +168,7 @@
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 22.3%; /* Geändert von 14.2% zu 22.3% */
+            bottom: 19.8%; /* Geändert von 22.3% zu 19.8% */
         }
 
         .radar-text {
@@ -190,7 +190,7 @@
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 13.1%; /* Geändert von 5% zu 13.1% */
+            bottom: 10.6%; /* Geändert von 13.1% zu 10.6% */
         }
 
         .land-text {
@@ -212,7 +212,7 @@
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 13.1%; /* Angepasst auf Höhe von Landen */
+            bottom: 10.6%; /* Angepasst auf Höhe von Landen */
         }
 
         .back-text {
@@ -240,6 +240,8 @@
             color: #dc857e;
             border: none;
             cursor: pointer;
+            /* Verschiebung um 1,5-fache Länge nach links */
+            right: calc(1% - 1.5 * (0.85vw + 1.7vw)); /* 0.85vw (padding) + 1.7vw (Schriftbreite) als Annäherung */
         }
 
         .buy-button {
