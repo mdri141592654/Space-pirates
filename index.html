@@ -35,18 +35,10 @@
             width: 88%;
             height: 8.8vh;
             background-color: #003f2c;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 100%,
-                0% 100%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 0.5vh; /* Halbiert von 1vh */
+            margin-top: 0.5vh;
         }
 
         .header-text {
@@ -66,18 +58,10 @@
             width: 88%;
             height: 10.1vh;
             background-color: #001f2f;
-            clip-path: polygon(
-                0% 0%,
-                100% 0%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 0.5vh; /* Halbiert von 1vh */
+            margin-top: 0.5vh;
             overflow: visible;
         }
 
@@ -91,7 +75,7 @@
         .inventory-field.fuel-trade,
         .inventory-field.food-trade,
         .inventory-field.resources-trade {
-            width: 88%; /* Zurück auf 88% wie andere Felder */
+            width: 88%;
             height: auto;
             background-color: rgba(0, 31, 47, 0.75);
             min-height: 20.2vh;
@@ -102,7 +86,7 @@
             height: 8.5vh;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: 3.5vw; /* Harmonisiert mit erweiterten Feldern */
+            font-size: 3.5vw;
             color: #4ac9c0;
             -webkit-text-stroke: 0.085vw #000000;
             text-stroke: 0.085vw #000000;
@@ -120,7 +104,7 @@
             height: auto;
             padding: 2.4vh 1%;
             align-items: flex-start;
-            font-size: 3.5vw; /* Konsistent */
+            font-size: 3.5vw;
         }
 
         .inventory-text.fuel-trade,
@@ -129,7 +113,7 @@
             height: auto;
             padding: 2.4vh 1% 1% 1%;
             align-items: flex-start;
-            font-size: 3.5vw; /* Konsistent */
+            font-size: 3.5vw;
         }
 
         .inventory-text .row {
@@ -157,22 +141,12 @@
             width: 88%;
             height: 8.1vh;
             background-color: #064b2a;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 5%; /* Schiff oben */
+            bottom: 23.4%; /* Schiff oben */
         }
 
         .ship-text {
@@ -189,16 +163,6 @@
             width: 88%;
             height: 8.1vh;
             background-color: #005265;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
@@ -221,22 +185,12 @@
             width: 88%;
             height: 8.1vh;
             background-color: #c14d08;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 23.4%; /* Landen unten */
+            bottom: 5%; /* Landen unten */
         }
 
         .land-text {
@@ -253,22 +207,12 @@
             width: 88%;
             height: 8.1vh;
             background-color: #c14d08;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: none;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             position: absolute;
-            bottom: 23.4%; /* Gleiche Position wie Land-field */
+            bottom: 5%; /* Auf Höhe von Landen */
         }
 
         .back-text {
@@ -286,16 +230,6 @@
             right: 1%;
             height: 4.1vh;
             background-color: #3d1753;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
@@ -311,16 +245,6 @@
         .buy-button {
             height: 8.2vh;
             background-color: #064c2b;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
@@ -349,16 +273,6 @@
             right: 1%;
             height: 8.2vh;
             background-color: #d15609;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
@@ -384,16 +298,6 @@
         .info-button {
             height: 4.1vh;
             background-color: #196bb5;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
@@ -410,16 +314,6 @@
         .go-button {
             height: 4.1vh;
             background-color: #064c2b;
-            clip-path: polygon(
-                2.5% 0%,
-                97.5% 0%,
-                100% 2.5%,
-                100% 97.5%,
-                97.5% 100%,
-                2.5% 100%,
-                0% 97.5%,
-                0% 2.5%
-            );
             display: flex;
             justify-content: center;
             align-items: center;
