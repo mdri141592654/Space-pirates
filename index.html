@@ -66,13 +66,13 @@
         }
 
         .inventory-field.ship-expanded,
-        .inventory-field.radar-expanded {
+        .inventory-field.radar-expanded,
+        .inventory-field.market-expanded {
             height: auto;
             opacity: 0.75;
-            margin-top: 0.5vh; /* Konsistenter Abstand */
+            margin-top: 0.5vh; /* Konsistenter Abstand für alle erweiterten Zustände */
         }
 
-        .inventory-field.market-expanded,
         .inventory-field.fuel-trade,
         .inventory-field.food-trade,
         .inventory-field.resources-trade {
@@ -80,6 +80,7 @@
             height: auto;
             background-color: rgba(0, 31, 47, 0.75);
             min-height: 20.2vh;
+            margin-top: 0.5vh; /* Konsistenter Abstand für Handel-Zustände */
         }
 
         .inventory-text {
@@ -97,22 +98,17 @@
             align-items: center;
             line-height: 1.2;
             margin: 0;
+            padding: 2.4vh 1%; /* Einheitliches Padding für alle Zustände */
         }
 
         .inventory-text.ship-expanded,
         .inventory-text.radar-expanded,
-        .inventory-text.market-expanded {
-            height: auto;
-            padding: 2.4vh 1%;
-            align-items: flex-start;
-            font-size: 3.5vw;
-        }
-
+        .inventory-text.market-expanded,
         .inventory-text.fuel-trade,
         .inventory-text.food-trade,
         .inventory-text.resources-trade {
             height: auto;
-            padding: 2.4vh 1% 1% 1%;
+            padding: 2.4vh 1%; /* Konsistentes Padding */
             align-items: flex-start;
             font-size: 3.5vw;
         }
