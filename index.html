@@ -120,6 +120,7 @@
             width: 100%;
             margin: 0;
             min-height: 0;
+            align-items: center;
         }
 
         .inventory-text.ship-expanded .row,
@@ -132,12 +133,12 @@
         }
 
         .inventory-text.market-expanded .row:first-child span {
-            font-size: 5.25vw; /* 1.5-fache Größe von 3.5vw */
+            font-size: 5.25vw;
         }
 
         .inventory-text .row.empty {
-            min-height: 2vh; /* Minimale Höhe für sichtbaren Abstand */
-            margin: 0.5vh 0; /* Abstand oberhalb und unterhalb der leeren Zeile */
+            min-height: 2vh;
+            margin: 0.5vh 0;
         }
 
         .ship-field {
@@ -228,10 +229,10 @@
             text-align: center;
         }
 
-        .trade-button {
-            position: absolute;
+        .trade-button,
+        .info-button,
+        .go-button {
             height: 4.1vh;
-            background-color: #3d1753;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -239,10 +240,26 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
             font-size: 2vw;
-            color: #dc857e;
             border: none;
             cursor: pointer;
-            right: 2%; /* Abstand zum rechten Rand des Inventarfelds, entsprechend dem linken Schriftabstand */
+            margin-left: 0.85vw;
+        }
+
+        .trade-button {
+            background-color: #3d1753;
+            color: #dc857e;
+        }
+
+        .info-button {
+            background-color: #196bb5;
+            color: #0d7de1;
+        }
+
+        .go-button {
+            background-color: #064c2b;
+            color: #b7de3e;
+            -webkit-text-stroke: 0.1vw #000000;
+            text-stroke: 0.1vw #000000;
         }
 
         .buy-button {
@@ -266,8 +283,6 @@
         .buy-button.disabled {
             background-color: #4a4a4a;
             color: #8a8a8a;
-            -webkit-text-stroke: 0.1vw #000000;
-            text-stroke: 0.1vw #000000;
             cursor: not-allowed;
         }
 
@@ -293,42 +308,7 @@
         .sell-button.disabled {
             background-color: #4a4a4a;
             color: #8a8a8a;
-            -webkit-text-stroke: 0.1vw #000000;
-            text-stroke: 0.1vw #000000;
             cursor: not-allowed;
-        }
-
-        .info-button {
-            height: 4.1vh;
-            background-color: #196bb5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 0.85vw;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 2vw;
-            color: #0d7de1;
-            border: none;
-            cursor: pointer;
-            margin-right: 0.85vw;
-        }
-
-        .go-button {
-            height: 4.1vh;
-            background-color: #064c2b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 0.85vw;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 2vw;
-            color: #b7de3e;
-            -webkit-text-stroke: 0.1vw #000000;
-            text-stroke: 0.1vw #000000;
-            border: none;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -338,11 +318,7 @@
             <div class="header-text">Space Pirates</div>
         </div>
         <div class="inventory-field">
-            <div class="inventory-text">
-                <div class="row"><span>Schiff: 100%</span><span>1000 :Credits</span></div>
-                <div class="row"><span>Kleinraumschiff 0/10</span><span>21.05.4025</span></div>
-                <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
-            </div>
+            <div class="inventory-text"></div>
         </div>
         <div class="ship-field">
             <div class="ship-text">SCHIFF</div>
@@ -370,17 +346,22 @@
             maxCargo: 10
         };
 
+        function updateMainMenu() {
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryText.innerHTML = `
+                <div class="row"><span>Schiff: 100%</span><span>${playerData.credits} :Credits</span></div>
+                <div class="row"><span>Kleinraumschiff ${playerData.cargo}/${playerData.maxCargo}</span><span>21.05.4025</span></div>
+                <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
+            `;
+        }
+
         function resetToMainMenu() {
             document.body.style.backgroundImage = "url('background.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
-            inventoryText.innerHTML = `
-                <div class="row"><span>Schiff: 100%</span><span>1000 :Credits</span></div>
-                <div class="row"><span>Kleinraumschiff 0/10</span><span>21.05.4025</span></div>
-                <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
-            `;
+            inventoryField.className = 'inventory-field';
+            inventoryText.className = 'inventory-text';
+            updateMainMenu();
             document.querySelector('.ship-field').style.display = 'flex';
             document.querySelector('.radar-field').style.display = 'flex';
             document.querySelector('.land-field').style.display = 'flex';
@@ -388,131 +369,20 @@
             document.querySelector('.back-text').textContent = '';
         }
 
-        function showMarketView() {
-            document.body.style.backgroundImage = "url('market-zorak.jpg')";
-            const inventoryField = document.querySelector('.inventory-field');
-            const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
-            inventoryField.classList.add('market-expanded');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
-            inventoryText.classList.add('market-expanded');
-            inventoryText.innerHTML = `
-                <div class="row"><span>Marktplatz auf Zorak</span></div>
-                <div class="row empty"></div> <!-- Leere Zeile -->
-                <div class="row"><span>Treibstoff: 20 Credits</span><span class="trade-button" data-resource="fuel">Handel</span></div>
-                <div class="row empty"></div> <!-- Leere Zeile -->
-                <div class="row"><span>Lebensmittel: 35 Credits</span><span class="trade-button" data-resource="food">Handel</span></div>
-                <div class="row empty"></div> <!-- Leere Zeile -->
-                <div class="row"><span>Rohstoffe: 17 Credits</span><span class="trade-button" data-resource="resources">Handel</span></div>
-            `;
-            document.querySelector('.ship-field').style.display = 'none';
-            document.querySelector('.radar-field').style.display = 'none';
-            document.querySelector('.land-field').style.display = 'none';
-            document.querySelector('.back-field').style.display = 'flex';
-            document.querySelector('.back-text').textContent = 'STARTEN';
-
-            document.querySelectorAll('.trade-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const resource = this.getAttribute('data-resource');
-                    if (resource === 'fuel') {
-                        showFuelTradeView();
-                    } else if (resource === 'food') {
-                        showFoodTradeView();
-                    } else if (resource === 'resources') {
-                        showResourcesTradeView();
-                    }
-                });
-            });
-        }
-
-        function showFuelTradeView() {
-            document.body.style.backgroundImage = "url('market-zorak.jpg')";
-            const inventoryField = document.querySelector('.inventory-field');
-            const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade', 'resources-trade');
-            inventoryField.classList.add('fuel-trade');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade', 'resources-trade');
-            inventoryText.classList.add('fuel-trade');
-            const buyDisabled = playerData.credits < 20 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
-            const sellDisabled = playerData.fuel <= 0 ? 'disabled' : '';
-            inventoryText.innerHTML = `
-                <div class="row"><span>Unverzichtbar für Reisen zwischen Planeten und Galaxien. Der Verbrauch steigt mit der Entfernung. Die Qualität ist überall gleich – nur der Preis variiert je nach Planet.</span></div>
-                <div class="row"><span>Preis: 20 Credits pro Einheit</span></div>
-                <div class="row empty"></div>
-                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
-            `;
-            document.querySelector('.ship-field').style.display = 'none';
-            document.querySelector('.radar-field').style.display = 'none';
-            document.querySelector('.land-field').style.display = 'none';
-            document.querySelector('.back-field').style.display = 'flex';
-            document.querySelector('.back-text').textContent = 'MARKTPLATZ';
-            addButtonListeners();
-        }
-
-        function showFoodTradeView() {
-            document.body.style.backgroundImage = "url('market-zorak.jpg')";
-            const inventoryField = document.querySelector('.inventory-field');
-            const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'resources-trade');
-            inventoryField.classList.add('food-trade');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'resources-trade');
-            inventoryText.classList.add('food-trade');
-            const buyDisabled = playerData.credits < 35 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
-            const sellDisabled = playerData.food <= 0 ? 'disabled' : '';
-            inventoryText.innerHTML = `
-                <div class="row"><span>Wichtige Handelsware – auf manchen Planeten günstig, auf anderen teuer. Außerdem benötigt deine Crew Vorräte für lange Reisen. Ohne Verpflegung sinkt die Moral.</span></div>
-                <div class="row"><span>Preis: 35 Credits pro Einheit</span></div>
-                <div class="row empty"></div>
-                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
-            `;
-            document.querySelector('.ship-field').style.display = 'none';
-            document.querySelector('.radar-field').style.display = 'none';
-            document.querySelector('.land-field').style.display = 'none';
-            document.querySelector('.back-field').style.display = 'flex';
-            document.querySelector('.back-text').textContent = 'MARKTPLATZ';
-            addButtonListeners();
-        }
-
-        function showResourcesTradeView() {
-            document.body.style.backgroundImage = "url('market-zorak.jpg')";
-            const inventoryField = document.querySelector('.inventory-field');
-            const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
-            inventoryField.classList.add('resources-trade');
-            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
-            inventoryText.classList.add('resources-trade');
-            const buyDisabled = playerData.credits < 17 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
-            const sellDisabled = playerData.resources <= 0 ? 'disabled' : '';
-            inventoryText.innerHTML = `
-                <div class="row"><span>Auf rohstoffreichen Planeten günstig, auf knappen teuer. Wichtig für Handel und zum Reparieren deines Schiffs.</span></div>
-                <div class="row"><span>Preis: 17 Credits pro Einheit</span></div>
-                <div class="row empty"></div>
-                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
-            `;
-            document.querySelector('.ship-field').style.display = 'none';
-            document.querySelector('.radar-field').style.display = 'none';
-            document.querySelector('.land-field').style.display = 'none';
-            document.querySelector('.back-field').style.display = 'flex';
-            document.querySelector('.back-text').textContent = 'MARKTPLATZ';
-            addButtonListeners();
-        }
-
         function showRadarView() {
             document.body.style.backgroundImage = "url('pilot.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.add('radar-expanded');
-            inventoryText.classList.add('radar-expanded');
-            inventoryField.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
-            inventoryText.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryField.className = 'inventory-field radar-expanded';
+            inventoryText.className = 'inventory-text radar-expanded';
             inventoryText.innerHTML = `
                 <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
                 <div class="row empty"></div>
-                <div class="row"><span>Kryton</span><span class="info-button">i</span><span class="go-button">Go</span></div>
-                <div class="row"><span>Aurelia</span><span class="info-button">i</span><span class="go-button">Go</span></div>
-                <div class="row"><span>Dravon-4</span><span class="info-button">i</span><span class="go-button">Go</span></div>
-                <div class="row"><span>Elystra</span><span class="info-button">i</span><span class="go-button">Go</span></div>
-                <div class="row"><span>Nexaris outpost</span><span class="info-button">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Kryton</span><span style="margin-left:auto;" class="info-button" data-planet="Kryton">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Aurelia</span><span style="margin-left:auto;" class="info-button" data-planet="Aurelia">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Dravon-4</span><span style="margin-left:auto;" class="info-button" data-planet="Dravon-4">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Elystra</span><span style="margin-left:auto;" class="info-button" data-planet="Elystra">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Nexaris Outpost</span><span style="margin-left:auto;" class="info-button" data-planet="Nexaris Outpost">i</span><span class="go-button">Go</span></div>
                 <div class="row"><span>Nexaris Sektor verlassen</span></div>
             `;
             document.querySelector('.ship-field').style.display = 'none';
@@ -520,16 +390,43 @@
             document.querySelector('.land-field').style.display = 'none';
             document.querySelector('.back-field').style.display = 'flex';
             document.querySelector('.back-text').textContent = 'ZURÜCK';
+
+            document.querySelectorAll('.info-button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const planet = this.getAttribute('data-planet');
+                    showInfo(planet);
+                });
+            });
+        }
+
+        function showInfo(planet) {
+            let description = "";
+            switch (planet) {
+                case "Kryton":
+                    description = "Kryton ist ein rauer, von Minenkolonien durchzogener Planet. Die Oberfläche ist karg und lebensfeindlich, doch tief unter der Erde verbergen sich gigantische Rohstoffvorkommen. Händler und Schmuggler kommen gleichermaßen, um vom Reichtum der Minenarbeiter zu profitieren.";
+                    break;
+                case "Aurelia":
+                    description = "Aurelia ist eine strahlende Metropole im All. Wohlhabende Bewohner bevölkern gläserne Kuppelstädte und suchen nach Wertgegenständen und Luxusgütern. Ein Paradies für Händler, die mit teuren Artefakten oder edlen Waren handeln möchten.";
+                    break;
+                case "Dravon-4":
+                    description = "Offiziell ein öder, unbewohnter Planet – doch in Wahrheit einer der größten Umschlagplätze für illegale Geschäfte. Waffen, Drogen, Kunstwerke und seltene Technikkomponenten wechseln hier im Schatten ihre Besitzer. Ein riskanter Ort, doch für Mutige auch höchst lukrativ.";
+                    break;
+                case "Elystra":
+                    description = "Elystra ist ein schillernder Unterhaltungsplanet, bekannt für Neonmetropolen, Casinos und Arenen. Lebensmittel und Drogen sind hier stark nachgefragt, um die unzähligen Besucher zufriedenzustellen. Wer Glück hat, kann mit einem vollen Frachtraum zum reichen Mann werden.";
+                    break;
+                case "Nexaris Outpost":
+                    description = "Die Nexaris-Outpost ist eine alte Weltraumstation, die bessere Tage gesehen hat. Sie dient als Umschlagplatz für Crews, die Schiffe wechseln, sowie als Schwarzmarkt für seltene Funde. In den dunklen Ecken der Gänge hört man oft von lukrativen, aber gefährlichen Geschäften.";
+                    break;
+            }
+            alert(`${planet}:\n\n${description}`);
         }
 
         document.querySelector('.ship-field').addEventListener('click', function() {
             document.body.style.backgroundImage = "url('lager.jpg')";
             const inventoryField = document.querySelector('.inventory-field');
             const inventoryText = document.querySelector('.inventory-text');
-            inventoryField.classList.add('ship-expanded');
-            inventoryText.classList.add('ship-expanded');
-            inventoryField.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
-            inventoryText.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryField.className = 'inventory-field ship-expanded';
+            inventoryText.className = 'inventory-text ship-expanded';
             inventoryText.innerHTML = `
                 <div class="row"><span>Frachtraum ${playerData.cargo}/${playerData.maxCargo}</span></div>
                 <div class="row empty"></div>
@@ -549,8 +446,9 @@
         });
 
         document.querySelector('.radar-field').addEventListener('click', showRadarView);
-
-        document.querySelector('.land-field').addEventListener('click', showMarketView);
+        document.querySelector('.land-field').addEventListener('click', function() {
+            showMarketView();
+        });
 
         document.querySelector('.back-field').addEventListener('click', function() {
             const backText = document.querySelector('.back-text').textContent;
@@ -561,62 +459,8 @@
             }
         });
 
-        function addButtonListeners() {
-            const buyButton = document.querySelector('.buy-button');
-            const sellButton = document.querySelector('.sell-button');
-            if (buyButton && sellButton) {
-                const container = document.querySelector('.inventory-text').classList;
-                buyButton.addEventListener('click', function() {
-                    if (container.contains('fuel-trade') && !this.classList.contains('disabled')) {
-                        if (playerData.credits >= 20 && playerData.cargo < playerData.maxCargo) {
-                            playerData.credits -= 20;
-                            playerData.fuel += 1;
-                            playerData.cargo += 1;
-                            showFuelTradeView();
-                        }
-                    } else if (container.contains('food-trade') && !this.classList.contains('disabled')) {
-                        if (playerData.credits >= 35 && playerData.cargo < playerData.maxCargo) {
-                            playerData.credits -= 35;
-                            playerData.food += 1;
-                            playerData.cargo += 1;
-                            showFoodTradeView();
-                        }
-                    } else if (container.contains('resources-trade') && !this.classList.contains('disabled')) {
-                        if (playerData.credits >= 17 && playerData.cargo < playerData.maxCargo) {
-                            playerData.credits -= 17;
-                            playerData.resources += 1;
-                            playerData.cargo += 1;
-                            showResourcesTradeView();
-                        }
-                    }
-                });
-
-                sellButton.addEventListener('click', function() {
-                    if (container.contains('fuel-trade') && !this.classList.contains('disabled')) {
-                        if (playerData.fuel > 0) {
-                            playerData.credits += 20;
-                            playerData.fuel -= 1;
-                            playerData.cargo -= 1;
-                            showFuelTradeView();
-                        }
-                    } else if (container.contains('food-trade') && !this.classList.contains('disabled')) {
-                        if (playerData.food > 0) {
-                            playerData.credits += 35;
-                            playerData.food -= 1;
-                            playerData.cargo -= 1;
-                            showFoodTradeView();
-                        }
-                    } else if (container.contains('resources-trade') && !this.classList.contains('disabled')) {
-                        if (playerData.resources > 0) {
-                            playerData.credits += 17;
-                            playerData.resources -= 1;
-                            playerData.cargo -= 1;
-                            showResourcesTradeView();
-                        }
-                    }
-                });
-            }
-        }
+        // Initial Start
+        resetToMainMenu();
     </script>
 </body>
 </html>
