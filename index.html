@@ -1,262 +1,623 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Space Trader</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Pirates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #000000;
+            background-image: url('background.jpg');
+            background-size: contain;
+            background-position: top left;
+            background-repeat: no-repeat;
+            overflow: auto;
+            overflow-x: hidden;
+        }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Orbitron', sans-serif;
-      background-color: black;
-      color: #00ffcc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+        .game-container {
+            width: 100%;
+            margin: 0 auto;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-    #game {
-      width: 600px;
-      border: 2px solid #00ffcc;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.9);
-    }
+        .header-field {
+            width: 88%;
+            height: 8.8vh;
+            background-color: #003f2c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5vh;
+        }
 
-    .menu button {
-      display: block;
-      width: 100%;
-      margin: 5px 0;
-      padding: 10px;
-      background: none;
-      border: 1px solid #00ffcc;
-      color: #00ffcc;
-      cursor: pointer;
-      text-align: left;
-    }
+        .header-text {
+            width: 85.6%;
+            height: 5.6vh;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 8vw;
+            color: #f8c22b;
+            text-align: center;
+            line-height: 5.6vh;
+            -webkit-text-stroke: 0.26vw #000f21;
+            text-stroke: 0.26vw #000f21;
+        }
 
-    .menu button:hover:enabled {
-      background-color: #00ffcc;
-      color: black;
-    }
+        .inventory-field {
+            width: 88%;
+            height: 10.1vh;
+            background-color: #001f2f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5vh;
+            overflow: visible;
+            position: relative;
+        }
 
-    .menu button:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+        .inventory-field.ship-expanded,
+        .inventory-field.radar-expanded,
+        .inventory-field.market-expanded {
+            height: auto;
+            opacity: 0.75;
+            margin-top: 0.5vh;
+        }
 
-    .info {
-      margin-bottom: 20px;
-    }
+        .inventory-field.fuel-trade,
+        .inventory-field.food-trade,
+        .inventory-field.resources-trade {
+            width: 88%;
+            height: auto;
+            background-color: rgba(0, 31, 47, 0.75);
+            min-height: 20.2vh;
+            margin-top: 0.5vh;
+        }
 
-    .row {
-      display: flex;
-      justify-content: space-between;
-    }
+        .inventory-text {
+            width: 96%;
+            height: 8.5vh;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 3.5vw;
+            color: #4ac9c0;
+            -webkit-text-stroke: 0.085vw #000000;
+            text-stroke: 0.085vw #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.2;
+            margin: 0;
+            padding: 2.4vh 1%;
+        }
 
-    /* Info-Popups */
-    .info-box {
-      border: 1px solid #00ffcc;
-      background-color: rgba(0, 0, 0, 0.95);
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 14px;
-      line-height: 1.4em;
-    }
+        .inventory-text.ship-expanded,
+        .inventory-text.radar-expanded,
+        .inventory-text.market-expanded,
+        .inventory-text.fuel-trade,
+        .inventory-text.food-trade,
+        .inventory-text.resources-trade {
+            height: auto;
+            padding: 2.4vh 1%;
+            align-items: flex-start;
+            font-size: 3.5vw;
+        }
 
-    /* Einheitliches Styling für Handel/i/Go */
-    .action-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: 5px;
-      margin-top: 5px;
-    }
+        .inventory-text .row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 0;
+            min-height: 0;
+        }
 
-    .action-row button {
-      background-color: #00ffcc;
-      color: black;
-      border: none;
-      padding: 5px 10px;
-      min-width: 50px;
-      text-align: center;
-      cursor: pointer;
-    }
+        .inventory-text.ship-expanded .row,
+        .inventory-text.radar-expanded .row,
+        .inventory-text.market-expanded .row,
+        .inventory-text.fuel-trade .row,
+        .inventory-text.food-trade .row,
+        .inventory-text.resources-trade .row {
+            justify-content: flex-start;
+        }
 
-    .action-row button:hover:enabled {
-      background-color: #00997a;
-      color: white;
-    }
-  </style>
+        .inventory-text.market-expanded .row:first-child span {
+            font-size: 5.25vw; /* 1.5-fache Größe von 3.5vw */
+        }
+
+        .inventory-text .row.empty {
+            min-height: 2vh; /* Minimale Höhe für sichtbaren Abstand */
+            margin: 0.5vh 0; /* Abstand oberhalb und unterhalb der leeren Zeile */
+        }
+
+        .ship-field {
+            width: 88%;
+            height: 8.1vh;
+            background-color: #064b2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: absolute;
+            bottom: 29%;
+        }
+
+        .ship-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 6vw;
+            color: #9dbd38;
+            -webkit-text-stroke: 0.17vw #000000;
+            text-stroke: 0.17vw #000000;
+            text-align: center;
+        }
+
+        .radar-field {
+            width: 88%;
+            height: 8.1vh;
+            background-color: #005265;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: absolute;
+            bottom: 19.8%;
+        }
+
+        .radar-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 6vw;
+            color: #46aeab;
+            -webkit-text-stroke: 0.17vw #000000;
+            text-stroke: 0.17vw #000000;
+            text-align: center;
+        }
+
+        .land-field {
+            width: 88%;
+            height: 8.1vh;
+            background-color: #c14d08;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10.6%;
+        }
+
+        .land-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 6vw;
+            color: #fece40;
+            -webkit-text-stroke: 0.17vw #000000;
+            text-stroke: 0.17vw #000000;
+            text-align: center;
+        }
+
+        .back-field {
+            width: 88%;
+            height: 8.1vh;
+            background-color: #c14d08;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10.6%;
+        }
+
+        .back-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 6vw;
+            color: #fece40;
+            -webkit-text-stroke: 0.17vw #000000;
+            text-stroke: 0.17vw #000000;
+            text-align: center;
+        }
+
+        .trade-button {
+            position: absolute;
+            height: 4.1vh;
+            background-color: #3d1753;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 0.85vw;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2vw;
+            color: #dc857e;
+            border: none;
+            cursor: pointer;
+            right: 2%; /* Abstand zum rechten Rand des Inventarfelds, entsprechend dem linken Schriftabstand */
+        }
+
+        .buy-button {
+            height: 8.2vh;
+            background-color: #064c2b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1.7vw;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 4vw;
+            color: #b7de3e;
+            -webkit-text-stroke: 0.1vw #000000;
+            text-stroke: 0.1vw #000000;
+            border: none;
+            cursor: pointer;
+            margin-right: 1.7vw;
+        }
+
+        .buy-button.disabled {
+            background-color: #4a4a4a;
+            color: #8a8a8a;
+            -webkit-text-stroke: 0.1vw #000000;
+            text-stroke: 0.1vw #000000;
+            cursor: not-allowed;
+        }
+
+        .sell-button {
+            position: absolute;
+            right: 1%;
+            height: 8.2vh;
+            background-color: #d15609;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1.7vw;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 4vw;
+            color: #ed770e;
+            -webkit-text-stroke: 0.1vw #000000;
+            text-stroke: 0.1vw #000000;
+            border: none;
+            cursor: pointer;
+        }
+
+        .sell-button.disabled {
+            background-color: #4a4a4a;
+            color: #8a8a8a;
+            -webkit-text-stroke: 0.1vw #000000;
+            text-stroke: 0.1vw #000000;
+            cursor: not-allowed;
+        }
+
+        .info-button {
+            height: 4.1vh;
+            background-color: #196bb5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 0.85vw;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2vw;
+            color: #0d7de1;
+            border: none;
+            cursor: pointer;
+            margin-right: 0.85vw;
+        }
+
+        .go-button {
+            height: 4.1vh;
+            background-color: #064c2b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 0.85vw;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2vw;
+            color: #b7de3e;
+            -webkit-text-stroke: 0.1vw #000000;
+            text-stroke: 0.1vw #000000;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <div id="game">
-    <div id="info" class="info"></div>
-    <div id="menu" class="menu"></div>
-  </div>
-
-  <script>
-    const menu = document.getElementById('menu');
-    const info = document.getElementById('info');
-
-    const playerData = {
-      credits: 1000,
-      cargo: 0,
-      maxCargo: 100,
-      fuel: 50,
-      food: 20,
-      resources: {
-        rohstoffe: 0,
-        luxus: 0,
-        waffen: 0,
-        drogen: 0,
-        kunstwerke: 0,
-        technik: 0
-      }
-    };
-
-    const planets = {
-      Kryton: "Reich an Rohstoffen. Hier schürfen riesige Maschinen in den Minen, und Händler wetteifern um seltene Metalle und Kristalle. Ein Paradies für Rohstoffhändler – wenn man den Staub erträgt.",
-      Aurelia: "Ein goldener Planet mit wohlhabenden Bewohnern, die immer auf der Suche nach exotischen Wertgegenständen sind. Ihre gläsernen Kuppelstädte glänzen wie Juwelen im All.",
-      "Dravon-4": "Offiziell ein toter, karger Planet mit wenigen Ressourcen. Doch wer die richtigen Leute kennt, entdeckt hier einen Umschlagplatz für alles, was das Imperium verbietet – Waffen, Drogen, seltene Technik und Kunstwerke.",
-      Elystra: "Ein schillernder Unterhaltungsplanet. Casinos, Arenen und endlose Feste. Hier verschlingt die Bevölkerung Unmengen an Lebensmitteln und berauschenden Substanzen.",
-      "Nexaris Output": "Eine alternde Weltraumstation am Rand der bekannten Routen. Offiziell nur ein Bahnhof für Händler, doch im Inneren trifft man auf zwielichtige Gestalten, Schwarzmarkthändler und mögliche zukünftige Crew-Mitglieder."
-    };
-
-    function updateMainMenu() {
-      info.innerHTML = `
-        <div class="row"><span>Schiff: 100%</span><span>${playerData.credits} :Credits</span></div>
-        <div class="row"><span>Kleinraumschiff ${playerData.cargo}/${playerData.maxCargo}</span><span>21.05.4025</span></div>
-        <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
-      `;
-    }
-
-    function resetToMainMenu() {
-      updateMainMenu();
-      menu.innerHTML = `
-        <button onclick="showShip()">Schiff</button>
-        <button onclick="showRadar()">Radar</button>
-        <button onclick="showMarket()">Markt</button>
-      `;
-    }
-
-    function showShip() {
-      info.innerHTML = "<div>Schiffssysteme: Alles im grünen Bereich.</div>";
-      menu.innerHTML = `<button onclick="resetToMainMenu()">Zurück</button>`;
-    }
-
-    function showRadar() {
-      updateMainMenu();
-      menu.innerHTML = `
-        ${Object.keys(planets).map(p => `
-          <div class="row">
-            <span>${p}</span>
-            <div class="action-row">
-              <button onclick="showInfo('${p}')">i</button>
-              <button onclick="goToPlanet('${p}')">Go</button>
+    <div class="game-container">
+        <div class="header-field">
+            <div class="header-text">Space Pirates</div>
+        </div>
+        <div class="inventory-field">
+            <div class="inventory-text">
+                <div class="row"><span>Schiff: 100%</span><span>1000 :Credits</span></div>
+                <div class="row"><span>Kleinraumschiff 0/10</span><span>21.05.4025</span></div>
+                <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
             </div>
-          </div>
-        `).join("")}
-        <button onclick="resetToMainMenu()">Zurück</button>
-      `;
-    }
+        </div>
+        <div class="ship-field">
+            <div class="ship-text">SCHIFF</div>
+        </div>
+        <div class="radar-field">
+            <div class="radar-text">RADAR</div>
+        </div>
+        <div class="land-field">
+            <div class="land-text">LANDEN</div>
+        </div>
+        <div class="back-field">
+            <div class="back-text"></div>
+        </div>
+    </div>
 
-    function showInfo(planet) {
-      const description = planets[planet];
-      info.innerHTML = `
-        <div class="row"><span>${planet}</span></div>
-        <div class="info-box">${description}</div>
-      `;
-    }
+    <script>
+        console.log("Space Pirates initialized");
 
-    function goToPlanet(planet) {
-      info.innerHTML = `<div>Reise nach ${planet} wird vorbereitet...</div>`;
-      // Funktionalität im nächsten Schritt
-    }
+        let playerData = {
+            credits: 1000,
+            fuel: 0,
+            food: 0,
+            resources: 0,
+            cargo: 0,
+            maxCargo: 10
+        };
 
-    function showMarket() {
-      info.innerHTML = "<div>Marktplatz – wähle eine Option:</div>";
-      menu.innerHTML = `
-        <button onclick="showFuelMarket()">Treibstoff</button>
-        <button onclick="showFoodMarket()">Nahrung</button>
-        <button onclick="showResourcesMarket()">Rohstoffe</button>
-        <button onclick="resetToMainMenu()">Zurück</button>
-      `;
-    }
+        function resetToMainMenu() {
+            document.body.style.backgroundImage = "url('background.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.innerHTML = `
+                <div class="row"><span>Schiff: 100%</span><span>1000 :Credits</span></div>
+                <div class="row"><span>Kleinraumschiff 0/10</span><span>21.05.4025</span></div>
+                <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'flex';
+            document.querySelector('.radar-field').style.display = 'flex';
+            document.querySelector('.land-field').style.display = 'flex';
+            document.querySelector('.back-field').style.display = 'none';
+            document.querySelector('.back-text').textContent = '';
+        }
 
-    function showFuelMarket() {
-      info.innerHTML = "<div>Treibstoff Markt</div>";
-      menu.innerHTML = `
-        <button onclick="buyFuel()">Kaufen (+10 Treibstoff für 100 Credits)</button>
-        <button onclick="resetToMainMenu()">Zurück</button>
-      `;
-    }
+        function showMarketView() {
+            document.body.style.backgroundImage = "url('market-zorak.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryField.classList.add('market-expanded');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.classList.add('market-expanded');
+            inventoryText.innerHTML = `
+                <div class="row"><span>Marktplatz auf Zorak</span></div>
+                <div class="row empty"></div> <!-- Leere Zeile -->
+                <div class="row"><span>Treibstoff: 20 Credits</span><span class="trade-button" data-resource="fuel">Handel</span></div>
+                <div class="row empty"></div> <!-- Leere Zeile -->
+                <div class="row"><span>Lebensmittel: 35 Credits</span><span class="trade-button" data-resource="food">Handel</span></div>
+                <div class="row empty"></div> <!-- Leere Zeile -->
+                <div class="row"><span>Rohstoffe: 17 Credits</span><span class="trade-button" data-resource="resources">Handel</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'STARTEN';
 
-    function buyFuel() {
-      if (playerData.credits >= 100) {
-        playerData.credits -= 100;
-        playerData.fuel += 10;
-        info.innerHTML = `<div>Gekauft: 10 Treibstoff. Gesamt: ${playerData.fuel}</div>`;
-      } else {
-        info.innerHTML = `<div>Nicht genug Credits.</div>`;
-      }
-      updateMainMenu();
-    }
+            document.querySelectorAll('.trade-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const resource = this.getAttribute('data-resource');
+                    if (resource === 'fuel') {
+                        showFuelTradeView();
+                    } else if (resource === 'food') {
+                        showFoodTradeView();
+                    } else if (resource === 'resources') {
+                        showResourcesTradeView();
+                    }
+                });
+            });
+        }
 
-    function showFoodMarket() {
-      info.innerHTML = "<div>Nahrungs Markt</div>";
-      menu.innerHTML = `
-        <button onclick="buyFood()">Kaufen (+5 Nahrung für 50 Credits)</button>
-        <button onclick="resetToMainMenu()">Zurück</button>
-      `;
-    }
+        function showFuelTradeView() {
+            document.body.style.backgroundImage = "url('market-zorak.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade', 'resources-trade');
+            inventoryField.classList.add('fuel-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'food-trade', 'resources-trade');
+            inventoryText.classList.add('fuel-trade');
+            const buyDisabled = playerData.credits < 20 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
+            const sellDisabled = playerData.fuel <= 0 ? 'disabled' : '';
+            inventoryText.innerHTML = `
+                <div class="row"><span>Unverzichtbar für Reisen zwischen Planeten und Galaxien. Der Verbrauch steigt mit der Entfernung. Die Qualität ist überall gleich – nur der Preis variiert je nach Planet.</span></div>
+                <div class="row"><span>Preis: 20 Credits pro Einheit</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'MARKTPLATZ';
+            addButtonListeners();
+        }
 
-    function buyFood() {
-      if (playerData.credits >= 50) {
-        playerData.credits -= 50;
-        playerData.food += 5;
-        info.innerHTML = `<div>Gekauft: 5 Nahrung. Gesamt: ${playerData.food}</div>`;
-      } else {
-        info.innerHTML = `<div>Nicht genug Credits.</div>`;
-      }
-      updateMainMenu();
-    }
+        function showFoodTradeView() {
+            document.body.style.backgroundImage = "url('market-zorak.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'resources-trade');
+            inventoryField.classList.add('food-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'resources-trade');
+            inventoryText.classList.add('food-trade');
+            const buyDisabled = playerData.credits < 35 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
+            const sellDisabled = playerData.food <= 0 ? 'disabled' : '';
+            inventoryText.innerHTML = `
+                <div class="row"><span>Wichtige Handelsware – auf manchen Planeten günstig, auf anderen teuer. Außerdem benötigt deine Crew Vorräte für lange Reisen. Ohne Verpflegung sinkt die Moral.</span></div>
+                <div class="row"><span>Preis: 35 Credits pro Einheit</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'MARKTPLATZ';
+            addButtonListeners();
+        }
 
-    function showResourcesMarket() {
-      info.innerHTML = "<div>Rohstoff Markt</div>";
-      menu.innerHTML = `
-        <button onclick="buyResource('rohstoffe', 100, 1)">Rohstoffe kaufen</button>
-        <button onclick="sellResource('rohstoffe', 80, 1)">Rohstoffe verkaufen</button>
-        <button onclick="resetToMainMenu()">Zurück</button>
-      `;
-    }
+        function showResourcesTradeView() {
+            document.body.style.backgroundImage = "url('market-zorak.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
+            inventoryField.classList.add('resources-trade');
+            inventoryText.classList.remove('ship-expanded', 'radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade');
+            inventoryText.classList.add('resources-trade');
+            const buyDisabled = playerData.credits < 17 || playerData.cargo >= playerData.maxCargo ? 'disabled' : '';
+            const sellDisabled = playerData.resources <= 0 ? 'disabled' : '';
+            inventoryText.innerHTML = `
+                <div class="row"><span>Auf rohstoffreichen Planeten günstig, auf knappen teuer. Wichtig für Handel und zum Reparieren deines Schiffs.</span></div>
+                <div class="row"><span>Preis: 17 Credits pro Einheit</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span class="buy-button ${buyDisabled}">KAUFEN</span><span class="sell-button ${sellDisabled}">VERKAUFEN</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'MARKTPLATZ';
+            addButtonListeners();
+        }
 
-    function buyResource(type, price, amount) {
-      if (playerData.credits >= price && playerData.cargo + amount <= playerData.maxCargo) {
-        playerData.credits -= price;
-        playerData.resources[type] += amount;
-        playerData.cargo += amount;
-        info.innerHTML = `<div>Gekauft: ${amount} ${type}. Gesamt: ${playerData.resources[type]}</div>`;
-      } else {
-        info.innerHTML = `<div>Kauf nicht möglich.</div>`;
-      }
-      updateMainMenu();
-    }
+        function showRadarView() {
+            document.body.style.backgroundImage = "url('pilot.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.add('radar-expanded');
+            inventoryText.classList.add('radar-expanded');
+            inventoryField.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.classList.remove('ship-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.innerHTML = `
+                <div class="row"><span>Ort: Nexaris Sektor / Orbit / Zorak</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span>Kryton</span><span class="info-button">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Aurelia</span><span class="info-button">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Dravon-4</span><span class="info-button">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Elystra</span><span class="info-button">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Nexaris outpost</span><span class="info-button">i</span><span class="go-button">Go</span></div>
+                <div class="row"><span>Nexaris Sektor verlassen</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'ZURÜCK';
+        }
 
-    function sellResource(type, price, amount) {
-      if (playerData.resources[type] >= amount) {
-        playerData.credits += price;
-        playerData.resources[type] -= amount;
-        playerData.cargo -= amount;
-        info.innerHTML = `<div>Verkauft: ${amount} ${type}. Gesamt: ${playerData.resources[type]}</div>`;
-      } else {
-        info.innerHTML = `<div>Nicht genug Waren zum Verkaufen.</div>`;
-      }
-      updateMainMenu();
-    }
+        document.querySelector('.ship-field').addEventListener('click', function() {
+            document.body.style.backgroundImage = "url('lager.jpg')";
+            const inventoryField = document.querySelector('.inventory-field');
+            const inventoryText = document.querySelector('.inventory-text');
+            inventoryField.classList.add('ship-expanded');
+            inventoryText.classList.add('ship-expanded');
+            inventoryField.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.classList.remove('radar-expanded', 'market-expanded', 'fuel-trade', 'food-trade', 'resources-trade');
+            inventoryText.innerHTML = `
+                <div class="row"><span>Frachtraum ${playerData.cargo}/${playerData.maxCargo}</span></div>
+                <div class="row empty"></div>
+                <div class="row"><span>Treibstoff: ${playerData.fuel}</span></div>
+                <div class="row"><span>Lebensmittel: ${playerData.food}</span></div>
+                <div class="row"><span>Rohstoffe: ${playerData.resources}</span></div>
+                <div class="row"><span>Waffen: 0</span></div>
+                <div class="row"><span>Drogen: 0</span></div>
+                <div class="row"><span>Kunstwerke: 0</span></div>
+                <div class="row"><span>Technikkomponenten: 0</span></div>
+            `;
+            document.querySelector('.ship-field').style.display = 'none';
+            document.querySelector('.radar-field').style.display = 'none';
+            document.querySelector('.land-field').style.display = 'none';
+            document.querySelector('.back-field').style.display = 'flex';
+            document.querySelector('.back-text').textContent = 'ZURÜCK';
+        });
 
-    resetToMainMenu();
-  </script>
+        document.querySelector('.radar-field').addEventListener('click', showRadarView);
+
+        document.querySelector('.land-field').addEventListener('click', showMarketView);
+
+        document.querySelector('.back-field').addEventListener('click', function() {
+            const backText = document.querySelector('.back-text').textContent;
+            if (backText === 'MARKTPLATZ') {
+                showMarketView();
+            } else {
+                resetToMainMenu();
+            }
+        });
+
+        function addButtonListeners() {
+            const buyButton = document.querySelector('.buy-button');
+            const sellButton = document.querySelector('.sell-button');
+            if (buyButton && sellButton) {
+                const container = document.querySelector('.inventory-text').classList;
+                buyButton.addEventListener('click', function() {
+                    if (container.contains('fuel-trade') && !this.classList.contains('disabled')) {
+                        if (playerData.credits >= 20 && playerData.cargo < playerData.maxCargo) {
+                            playerData.credits -= 20;
+                            playerData.fuel += 1;
+                            playerData.cargo += 1;
+                            showFuelTradeView();
+                        }
+                    } else if (container.contains('food-trade') && !this.classList.contains('disabled')) {
+                        if (playerData.credits >= 35 && playerData.cargo < playerData.maxCargo) {
+                            playerData.credits -= 35;
+                            playerData.food += 1;
+                            playerData.cargo += 1;
+                            showFoodTradeView();
+                        }
+                    } else if (container.contains('resources-trade') && !this.classList.contains('disabled')) {
+                        if (playerData.credits >= 17 && playerData.cargo < playerData.maxCargo) {
+                            playerData.credits -= 17;
+                            playerData.resources += 1;
+                            playerData.cargo += 1;
+                            showResourcesTradeView();
+                        }
+                    }
+                });
+
+                sellButton.addEventListener('click', function() {
+                    if (container.contains('fuel-trade') && !this.classList.contains('disabled')) {
+                        if (playerData.fuel > 0) {
+                            playerData.credits += 20;
+                            playerData.fuel -= 1;
+                            playerData.cargo -= 1;
+                            showFuelTradeView();
+                        }
+                    } else if (container.contains('food-trade') && !this.classList.contains('disabled')) {
+                        if (playerData.food > 0) {
+                            playerData.credits += 35;
+                            playerData.food -= 1;
+                            playerData.cargo -= 1;
+                            showFoodTradeView();
+                        }
+                    } else if (container.contains('resources-trade') && !this.classList.contains('disabled')) {
+                        if (playerData.resources > 0) {
+                            playerData.credits += 17;
+                            playerData.resources -= 1;
+                            playerData.cargo -= 1;
+                            showResourcesTradeView();
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>
+
